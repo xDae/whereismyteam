@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Rebase from 're-base';
 import Webcam from "react-user-media";
-import ago from 's-ago';
+import timeago from 'timeago.js';
 
 import { apiKey, authDomain, databaseURL, storageBucket, messagingSenderId } from './firebase-config';
 import logo from './logo.svg';
@@ -78,6 +78,33 @@ class App extends Component {
     }).then(() => console.log('photo subida'));
   }
 
+  timeAgo = date => {
+    var es_ES = (number, index) => {
+      // number: the timeago / timein number;
+      // index: the index of array below;
+      return [
+        ['just now', 'right now'],
+        ['hace %s segundos', 'in %s seconds'],
+        ['hace 1 minutp', 'in 1 minute'],
+        ['%s minutes ago', 'in %s minutes'],
+        ['hace una hora', 'en una hora'],
+        ['hace %s horas', 'en %s horas'],
+        ['1 day ago', 'in 1 day'],
+        ['%s days ago', 'in %s days'],
+        ['1 week ago', 'in 1 week'],
+        ['%s weeks ago', 'in %s weeks'],
+        ['1 month ago', 'in 1 month'],
+        ['%s months ago', 'in %s months'],
+        ['1 year ago', 'in 1 year'],
+        ['%s years ago', 'in %s years']
+      ][index];
+    };
+
+    // register your locale with timeago
+    timeago.register('spanish', es_ES);
+    return new timeago().format(new Date(date), 'spanish')
+  }
+
   uploadToFirebase = () => {
     console.log('webcam ON');
   }
@@ -114,11 +141,12 @@ class App extends Component {
               ref="webcam"
               audio={false}
               onSuccess={this.uploadToFirebase}
-              onFailure={(error) => console.log('EEEERROR!: ', error)}
+              onFailure={({ name }) => console.log('EEEERROR!: ', name)}
             />)
           }
           <img className="snapshot-img" src={this.state.screenshot.screenshot} />
-          <span>{ago(new Date(this.state.screenshot.date))}</span>
+
+          <span>{this.timeAgo(this.state.screenshot.date)}</span>
           {!this.state.activeCam && (
               <span>snapshot stopped</span>
             )
