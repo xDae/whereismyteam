@@ -1,22 +1,11 @@
 import Rebase from 're-base';
 
-// const firebaseConfig = {
-//   apiKey: 'AIzaSyDh-01Z3gn5INCvcJ5n1cjkilfus_DeR_0',
-//   authDomain: 'whereismyteam-caa8e.firebaseapp.com",
-//   databaseURL: "https://whereismyteam-caa8e.firebaseio.com",
-//   storageBucket: "whereismyteam-caa8e.appspot.com",
-//   messagingSenderId: "159931923593"
-// };
-
 const base = Rebase.createClass({
-  // apiKey, authDomain, databaseURL, storageBucket, messagingSenderId
-  apiKey: 'AIzaSyDh-01Z3gn5INCvcJ5n1cjkilfus_DeR_0',
-  authDomain: 'whereismyteam-caa8e.firebaseapp.com',
-  databaseURL: 'https://whereismyteam-caa8e.firebaseio.com',
-  storageBucket: 'whereismyteam-caa8e.appspot.com',
-  messagingSenderId: '159931923593'
+  apiKey: "AIzaSyDeakRUsj5sLVFlRhkFRqBhDw4j9gMYTE0",
+  authDomain: "whereismyteamv2.firebaseapp.com",
+  databaseURL: "https://whereismyteamv2.firebaseio.com",
+  storageBucket: "whereismyteamv2.appspot.com",
+  messagingSenderId: "1017498599122"
 });
-
-// const { apiKey, authDomain, databaseURL, storageBucket, messagingSenderId } = firebaseConfig;
 
 export default base
