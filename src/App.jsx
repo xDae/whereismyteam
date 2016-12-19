@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import localforage from "localforage";
+import classNames from 'classnames';
 
 import Header from './Components/Header';
 import Sidebar from './Components/Sidebar';
@@ -84,8 +85,16 @@ class App extends Component {
   }
 
   render() {
+    const bgClass = classNames('du', 'font_bg', this.props.className, {
+      'new_bg': this.state.sidebarOpen
+    });
+
     return (
       <div className="h100">
+        <div
+          className={bgClass}
+          onClick={this.onCloseSidebar}
+        />
         <Sidebar
           isActive={this.state.sidebarOpen}
           onCloseBtn={this.onCloseSidebar}

@@ -31,56 +31,8 @@ class Sidebar extends Component {
             <li>
               <a href='#'>Blog</a>
             </li>
-            <li className='has-sub offset'>
-              <a href='#'>Organizers
-                <i className="fa fa-sort-desc" aria-hidden="true"></i>
-              </a>
-              <ul>
-                <li className='has-sub'>
-                  <a href='#'>Product 1</a>
-                  <ul>
-                    <li>
-                      <a href='#'>Sub Product</a>
-                    </li>
-                    <li>
-                      <a href='#'>Sub Product</a>
-                    </li>
-                  </ul>
-                </li>
-                <li className='has-sub'>
-                  <a href='#'>Product 2</a>
-                  <ul>
-                    <li>
-                      <a href='#'>Sub Product</a>
-                    </li>
-                    <li>
-                      <a href='#'>Sub Product</a>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
             <li>
               <a href='#'>About</a>
-            </li>
-            <li className='has-sub offset'>
-              <a href='#'>Pages
-                <i className="fa fa-sort-desc" aria-hidden="true"></i>
-              </a>
-              <ul>
-                <li className='has-sub'>
-                  <a href='#'>About</a>
-                </li>
-                <li className='has-sub'>
-                  <a href='#'>Terms</a>
-                </li>
-                <li className='has-sub'>
-                  <a href='#'>Privacy</a>
-                </li>
-                <li className='has-sub'>
-                  <a href='#'>Help Center</a>
-                </li>
-              </ul>
             </li>
             <li>
               <a href='#'>Contact</a>

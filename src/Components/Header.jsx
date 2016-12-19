@@ -30,9 +30,6 @@ class Header extends Component {
           <i className="fa fa-bars"></i>
         </a>
         <a href="#" className="logo">whereismyteam</a>
-        <a href="#" className="menu-opener">
-          <span></span>
-        </a>
       </header>
     );
   }
