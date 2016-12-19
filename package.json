@@ -8,6 +8,7 @@
     "redux": "^3.6.0"
   },
   "dependencies": {
+    "localforage": "^1.4.3",
     "re-base": "^2.5.1",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",

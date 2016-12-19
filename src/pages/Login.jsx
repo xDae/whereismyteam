@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { login } from './utils/login';
+import { login } from './../utils/login';
 
 class Login extends Component {
   render() {

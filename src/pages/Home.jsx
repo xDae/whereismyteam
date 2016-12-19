@@ -4,7 +4,7 @@ import ReactInterval from 'react-interval';
 import timeago from 'timeago.js';
 import * as es from 'timeago.js/locales/es';
 
-import base from './firebase-config';
+import base from './../firebase-config';
 
 class Home extends Component {
   static contextTypes = {
@@ -22,15 +22,39 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    if (this.context.currentUser.uid) {
-      this.bindScreenshots(this.context.currentUser.uid);
+    // base.onAuth(this.authDataCallback);
+
+    if (this.props.currentUser) {
+      this.bindScreenshots(this.props.currentUser);
       this.setState({ readytoScreenshot: true });
+    }
+  }
+
+  authDataCallback = user => {
+    if (user) {
+      console.log("caca " + user.uid + " is logged in with " + user.providerId);
+
+      this.setState({
+        user: {
+          name: user.displayName,
+          uid: user.uid,
+          providerId: user.providerId,
+        },
+        photoURL: user.photoURL
+      });
+    } else {
+      console.log("caca is logged out");
+
+      base.unauth();
+      this.props.router.redirect({
+        pathname: '/'
+      })
     }
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
     // console.log('componentWillReceiveProps', nextContext);
-    if (nextContext.currentUser.uid) {
+    if (nextContext.currentUser) {
       this.bindScreenshots(nextContext.currentUser.uid);
       this.setState({ readytoScreenshot: true });
     }
@@ -48,21 +72,24 @@ class Home extends Component {
     });
   }
 
-  setSnapshotsTimeOut = user => {
-    console.log('intervalo');
-    setInterval(this.takeSnapshot(user), 3000);
-  }
-
-  takeSnapshot = user => {
+  takeSnapshot = (room, user) => {
     const screenshot = this.refs.webcam.captureScreenshot();
-    console.log('snapshot taked!')
+    console.log('snapshot taked!');
 
-    base.update(user, {
-      data: {
-        screenshot,
-        date: base.database.ServerValue.TIMESTAMP
-      }
-    }).then(() => console.log('photo subida'));
+    var strImage = screenshot.replace(/^data:image\/[a-z]+;base64,/, "");
+    let storageRef = base.storage().ref('folderName/file.jpg');
+
+    storageRef.putString(strImage, 'base64')
+      .then(value => storageRef.getDownloadURL())
+      .then(value => {
+        return base.update(`rooms/${room}/${user}`, {
+          data: {
+            screenshot: value,
+            date: base.database.ServerValue.TIMESTAMP
+          }
+        });
+      })
+      .then(() => console.log('photo subida'));
   }
 
   timeAgo = date => {
@@ -72,16 +99,20 @@ class Home extends Component {
   }
 
   render() {
+    // if (!this.props.currentUser) {
+    //   return <span>registratre</span>
+    // }
+
     return (
       <div>
-        <h2>you are in the room: XXX</h2>
         <ReactInterval
           timeout={60000}
           enabled={this.state.readytoScreenshot}
-          callback={() => this.takeSnapshot(this.context.currentUser.uid)}
+          callback={() => this.takeSnapshot(this.props.room, this.props.currentUser)}
         />
         {this.state.activeCam && (
           <Webcam
+            captureFormat="image/jpeg"
             width={300}
             height={225}
             ref="webcam"
@@ -90,12 +121,6 @@ class Home extends Component {
             onFailure={({ name }) => console.log('EEEERROR!: ', name)}
           />
         )}
-
-        <img
-          role="presentation"
-          className="snapshot-img"
-          src={this.state.screenshot.screenshot}
-        />
         <br/>
         <span>{this.timeAgo(this.state.screenshot.date)}</span>
         <br/>
@@ -104,7 +129,7 @@ class Home extends Component {
         )}
         <br/>
         {this.state.activeCam && (
-          <button onClick={() => this.takeSnapshot(this.context.currentUser.uid)}>take snapshot</button>
+          <button onClick={() => this.takeSnapshot(this.props.room, this.props.currentUser)}>take snapshot</button>
         )}
         <br/>
         <button onClick={() => this.setState({ activeCam: !this.state.activeCam, readytoScreenshot: !this.state.activeCam})}>toggle cam</button>

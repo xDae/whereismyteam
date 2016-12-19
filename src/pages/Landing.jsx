@@ -13,8 +13,10 @@ class Landing extends Component {
       <div>
         <div>{currentUser && currentUser.name}</div>
         <span>welcome to bla bla bla</span>
+        <br/>
           <span>this is our wonderful page</span>
-          {currentUser.uid && <Link to="/home">Go to Home</Link>}
+          <br/>
+          {currentUser && <Link to="/home">Go to Home</Link>}
 
           <br/>
           <Link to={`/room/${shortid.generate()}`}>generar sala aleatoria</Link>

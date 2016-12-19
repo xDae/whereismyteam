@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import Header from './Components/Header';
+import localforage from "localforage";
 
-import { login } from './utils/login';
 import base from './firebase-config';
 
 import logo from './logo.svg';
@@ -18,20 +19,18 @@ class App extends Component {
   }
 
   constructor(props) {
-    super(props);
+    super(props)
+
     this.state = {
       activeCam: true,
-      user: {
-        name: null,
-        uid: null,
-        providerId: null
-      },
+      user: null,
       photoURL: logo
     };
   }
 
   componentDidMount() {
     base.onAuth(this.authDataCallback);
+    localforage.config();
   }
 
   authDataCallback = user => {
@@ -49,27 +48,22 @@ class App extends Component {
     } else {
       console.log("User is logged out");
       this.setState({
-        user: {
-          name: null,
-          uid: null,
-          providerId: null,
-        },
+        user: null,
         photoURL: logo
       });
     }
   }
 
-  logout= () => {
+  logout = () => {
     base.unauth();
     this.props.router.push({
       pathname: '/',
-      query: { modal: true },
       state: { fromLogout: true }
     })
   }
 
   renderName = () => {
-    if (this.state.user.uid) {
+    if (this.state.user) {
       return this.state.user.name;
     }
 
@@ -79,13 +73,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={this.state.photoURL} className="App-logo" alt="logo" />
-          <h2>Welcome {this.renderName()}</h2>
-          {!this.state.user.uid && <button onClick={() => login(this.props.router)}>login</button>}
-          {this.state.user.uid && <button onClick={this.logout}>logout</button>}
-
-        </div>
+        <Header />
         <div className="App-intro">
           {this.props.children}
         </div>

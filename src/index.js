@@ -6,11 +6,11 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { requireAuth, notRequireAuth } from './utils/require-auth';
 
 import App from './App';
-import Landing from './Landing';
-import Home from './Home';
-import Room from './Room';
-import Login from './Login';
-import NotFound from './NotFound';
+import Landing from './pages/Landing';
+import Home from './pages/Home';
+import Room from './pages/Room';
+import Login from './pages/Login';
+import NotFound from './pages/NotFound';
 
 import './index.css';
 
