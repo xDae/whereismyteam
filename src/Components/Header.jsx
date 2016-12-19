@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 class Header extends Component {
   constructor(props, context) {
@@ -19,9 +19,21 @@ class Header extends Component {
 
   render() {
     return (
-      <div className="App-header">
-        <h2>Welcome {this.renderName()}</h2>
-      </div>
+      <header id="header">
+        {/* Welcome this.renderName() */}
+        <a
+          id="menu-toggle"
+          href="#"
+          className="btn btn-dark btn-lg toggle"
+          onClick={this.props.onOpenBtn}
+        >
+          <i className="fa fa-bars"></i>
+        </a>
+        <a href="#" className="logo">whereismyteam</a>
+        <a href="#" className="menu-opener">
+          <span></span>
+        </a>
+      </header>
     );
   }
 }

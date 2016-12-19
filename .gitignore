@@ -10,7 +10,7 @@ coverage
 build
 
 # firebase stuff
-src/firebase-keys.json
+src/firebase-config.js
 
 # misc
 .DS_Store

@@ -1,11 +1,14 @@
-import React, { Component } from 'react';
-import Header from './Components/Header';
+import React, {Component} from 'react';
 import localforage from "localforage";
+
+import Header from './Components/Header';
+import Sidebar from './Components/Sidebar';
+import Footer from './Components/Footer';
 
 import base from './firebase-config';
 
-import logo from './logo.svg';
-import './App.css';
+import './styles/main.css';
+import './styles/App.css';
 
 class App extends Component {
   static childContextTypes = {
@@ -13,18 +16,16 @@ class App extends Component {
   };
 
   getChildContext() {
-    return {
-      currentUser: this.state.user
-    };
+    return {currentUser: this.state.user};
   }
 
   constructor(props) {
     super(props)
 
     this.state = {
+      sidebarOpen: false,
       activeCam: true,
-      user: null,
-      photoURL: logo
+      user: null
     };
   }
 
@@ -41,16 +42,13 @@ class App extends Component {
         user: {
           name: user.displayName,
           uid: user.uid,
-          providerId: user.providerId,
+          providerId: user.providerId
         },
         photoURL: user.photoURL
       });
     } else {
       console.log("User is logged out");
-      this.setState({
-        user: null,
-        photoURL: logo
-      });
+      this.setState({user: null});
     }
   }
 
@@ -58,7 +56,9 @@ class App extends Component {
     base.unauth();
     this.props.router.push({
       pathname: '/',
-      state: { fromLogout: true }
+      state: {
+        fromLogout: true
+      }
     })
   }
 
@@ -70,12 +70,38 @@ class App extends Component {
     return 'Anonymous';
   }
 
+  onCloseSidebar = () => {
+    this.setState({
+      sidebarOpen: false
+    });
+  }
+
+  onOpenSidebar = () => {
+    console.log('open!');
+    this.setState({
+      sidebarOpen: true
+    });
+  }
+
   render() {
     return (
-      <div className="App">
-        <Header />
-        <div className="App-intro">
-          {this.props.children}
+      <div className="h100">
+        <Sidebar
+          isActive={this.state.sidebarOpen}
+          onCloseBtn={this.onCloseSidebar}
+        />
+        <div id="wrapper">
+          <Header onOpenBtn={this.onOpenSidebar} />
+          <main id="main">
+            <div className="container">
+              <section className="calendar">
+                <div className="body">
+                  {this.props.children}
+                </div>
+              </section>
+            </div>
+          </main>
+          <Footer />
         </div>
       </div>
     );

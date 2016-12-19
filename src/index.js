@@ -12,8 +12,6 @@ import Room from './pages/Room';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 
-import './index.css';
-
 ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={App}>

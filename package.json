@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "flow-bin": "^0.37.0",
+    "flow-bin": "^0.37.1",
     "react-scripts": "0.8.4",
     "redux": "^3.6.0"
   },
   "dependencies": {
+    "classnames": "^2.2.5",
     "localforage": "^1.4.3",
     "re-base": "^2.5.1",
     "react": "^15.4.1",
