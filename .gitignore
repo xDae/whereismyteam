@@ -16,3 +16,5 @@ src/firebase-config.js
 .DS_Store
 .env
 npm-debug.log
+
+src/firebase-config.js
