@@ -6,16 +6,47 @@ body,
   height: 100%;
 }
 
+#wrapper {
+  overflow: auto;
+}
+
 #header {
+  display: flex;
   margin-bottom: 40px;
+  align-items: center;
+  min-height: 80px;
 }
 
 #header .logo {
   font-size: 26px;
   font-weight: 500;
-  margin: 2px 0 18px;
   color: #e64614;
   letter-spacing: 1.5px;
+}
+
+.header-right {
+  margin-left: auto;
+}
+
+.header-right .username{
+  margin-right: 20px;
+}
+
+.mr-20 {
+  margin-right: 20px;
+}
+
+
+.btn-login-google {
+  margin-right: 20px;
+}
+
+#menu-toggle {
+  margin: 0 40px 0 0;
+}
+
+.btn-login {
+  margin: 0 20px 0 auto;
 }
 
 #wrapper {
@@ -25,7 +56,6 @@ body,
 
 #main{
   flex-grow: 1;
-    height: 100%;
 }
 
 video {

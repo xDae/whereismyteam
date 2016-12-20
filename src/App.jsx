@@ -17,7 +17,7 @@ class App extends Component {
   };
 
   getChildContext() {
-    return {currentUser: this.state.user};
+    return { currentUser: this.state.user };
   }
 
   constructor(props) {
@@ -49,18 +49,8 @@ class App extends Component {
       });
     } else {
       console.log("User is logged out");
-      this.setState({user: null});
+      this.setState({ user: null });
     }
-  }
-
-  logout = () => {
-    base.unauth();
-    this.props.router.push({
-      pathname: '/',
-      state: {
-        fromLogout: true
-      }
-    })
   }
 
   renderName = () => {
@@ -103,11 +93,7 @@ class App extends Component {
           <Header onOpenBtn={this.onOpenSidebar} />
           <main id="main">
             <div className="container">
-              <section className="calendar">
-                <div className="body">
-                  {this.props.children}
-                </div>
-              </section>
+              {this.props.children}
             </div>
           </main>
           <Footer />

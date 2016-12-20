@@ -1,6 +1,6 @@
 import base from './../firebase-config';
 
-function login(router) {
+function login(provider, router) {
   var authHandler = (error, user) => {
       if (error) {
         console.log('EERROR', error);
@@ -13,8 +13,8 @@ function login(router) {
         })
       }
     }
-    //basic
-  return base.authWithOAuthPopup('google', authHandler);
+
+  return base.authWithOAuthPopup(provider, authHandler);
 }
 
-export {login }
+export { login }

@@ -39,6 +39,7 @@ class Room extends Component {
       }, this.connectUser2room(user));
 
     const ref = base.database().ref(`rooms/${this.props.params.roomId}/${user}`);
+
     ref.onDisconnect().update({ onlineStatus: false });
     }).catch(err => {
       console.log(err);
@@ -55,7 +56,6 @@ class Room extends Component {
         onlineStatus: true
       }
     }).catch(err => {
-      //handle error
       throw err;
     });
   }

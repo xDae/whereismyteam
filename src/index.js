@@ -10,6 +10,9 @@ import Landing from './pages/Landing';
 import Home from './pages/Home';
 import Room from './pages/Room';
 import Login from './pages/Login';
+import Register from './pages/Register';
+import PasswordRecovery from './pages/PasswordRecovery';
+import Logout from './pages/Logout';
 import NotFound from './pages/NotFound';
 
 ReactDOM.render(
@@ -19,6 +22,9 @@ ReactDOM.render(
       <Route path="home" component={Home} onEnter={requireAuth} />
       <Route path="room/:roomId" component={Room} />
       <Route path="login" component={Login} onEnter={notRequireAuth} />
+      <Route path="register" component={Register} onEnter={notRequireAuth} />
+      <Route path="passwordrecover" component={PasswordRecovery} onEnter={notRequireAuth} />
+      <Route path="logout" component={Logout} />
       <Route path="*" component={NotFound}/>
     </Route>
   </Router>,
