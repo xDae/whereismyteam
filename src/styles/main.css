@@ -8383,7 +8383,7 @@ img {
 	position: relative;
 	overflow: hidden;
 	padding: 40px 0;
-}
+} 
 
 .event-item + .event-item {
 	border-top: 1px solid #f4f5f9;
@@ -8470,10 +8470,14 @@ img {
 	color: #f4f5f9;
 	font-size: 60px;
 	line-height: 1;
+	-webkit-transition: all .3s ease-out;
+	-o-transition: all .3s ease-out;
+	transition: all .3s ease-out;
 }
 
-.event-item .more:hover {
+.event-item:hover .more {
 	color: #e64614;
+	right: 40px;
 }
 
 .event-item .action {
@@ -8572,6 +8576,7 @@ img {
 
 .tags {
 	float: right;
+	margin-top: 8px;
 }
 
 .tags .btn + .btn,
@@ -8769,6 +8774,7 @@ img {
 	width: auto;
 	width: auto;
 	padding: 10px 45px 8px 25px;
+	margin-top: 20px;
 }
 
 .jcf-select-drop {
@@ -9381,7 +9387,7 @@ img {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: rgba(0, 0, 0, .8);
+	background: rgba(70,76,100,0.5);
 	padding: 40px;
 	overflow: auto;
 	bottom: 100%;
@@ -9407,6 +9413,8 @@ img {
 	background: #fff;
 	padding: 36px 52px 0;
 	border-radius: 5px;
+	position: relative;
+	z-index: 1000;
 }
 
 .new-event h2 {
@@ -12061,6 +12069,8 @@ textarea {
 
 a#menu-toggle {
 	padding: 0;
+	position: relative;
+	z-index: 999;
 }
 
 .btn-dark:hover,
@@ -12191,6 +12201,9 @@ a#menu-toggle {
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
+li.offset {
+	margin-bottom: 40px !important;
+}
 #cssmenu {
 	width: 100%;
 	font-family: Raleway, sans-serif;
@@ -12284,9 +12297,7 @@ li.has-sub {
 }
 
 .shedule .active:hover .wrap_cont {
-	//display: block;
-	opacity: 1;
-	top: 75px;
+	display: block;
 }
 
 .shedule .item {
@@ -12294,17 +12305,16 @@ li.has-sub {
 }
 
 .shedule .item .wrap_cont {
-	top: 2500px;
+	display: none;
+	top: 75px;
 	left: 20px;
 	position: absolute;
 	padding-top: 30px;
-	//display: none;
-	opacity: 0;
 	max-width: 440px;
 	width: 100%;
-	-webkit-transition: all .4s ease-out;
-	-o-transition: all .4s ease-out;
-	transition: all .4s ease-out;
+	//-webkit-transition: all .4s ease-out;
+	//-o-transition: all .4s ease-out;
+	//transition: all .4s ease-out;
 }
 
 .shedule .item .wrap_cont_item {
@@ -12405,4 +12415,71 @@ a.botton_cont_item {
 	background: -moz-linear-gradient(90deg, #f16b0b 0, #e74b13 50%, #dc2b1c 100%);
 	background: linear-gradient(90deg, #f16b0b 0, #e74b13 50%, #dc2b1c 100%);
 	background-position: 50% 50%;
+}
+
+.new_bg {
+	opacity: 1 !important;
+	z-index: 1000 !important;
+}
+
+.font_bg {
+	opacity: 0;
+	position: fixed;
+	background: rgba(70,76,100,0.4);
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	-webkit-transition: all .5s ease-in-out;
+	-o-transition: all .5s ease-in-out;
+	transition: all .5s ease-in-out;
+}
+
+a.close.my_closed {
+	width: auto;
+	height: auto;
+	position: absolute;
+	right: 11px !important;
+	left: inherit;
+	top: 10px;
+	display: block;
+	font-size: 40px;
+	line-height: 24px;
+	color: #464c62 !important;
+	opacity: .9;
+}
+
+.calendar .jcf-select {
+	background-color: transparent;
+	border: 0;
+	text-transform: none;
+	font-size: 15px;
+	font-weight: 400;
+}
+
+.calendar .sort i {
+	margin-left: 0;
+}
+
+.calendar .sort .jcf-drop-active i {
+	font-size: 12px;
+	margin-left: 0px;
+	position: relative;
+	top: -3px;
+}
+
+.calendar .jcf-select.jcf-select-location-select {
+	float: left;
+	width: auto;
+	width: auto;
+	padding: 0px 45px 0px 25px;
+	margin-top: 0px;
+}
+
+.calendar .jcf-select .jcf-select-opener {
+	top: 0;
+}
+
+.jcf-select-drop {
+	//border-radius: 0;
 }
