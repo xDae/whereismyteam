@@ -20,7 +20,6 @@ class Landing extends Component {
 
           <br/>
           <Link className="btn btn-primary" to={`/room/${shortid.generate()}`}>generar sala aleatoria</Link>
-
       </div>
     );
   }

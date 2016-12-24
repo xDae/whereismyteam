@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router';
 import classNames from 'classnames';
 
 class Sidebar extends Component {
@@ -23,19 +24,7 @@ class Sidebar extends Component {
         <div id='cssmenu'>
           <ul>
             <li>
-              <a href='#'>Home</a>
-            </li>
-            <li>
-              <a href='#'>Events</a>
-            </li>
-            <li>
-              <a href='#'>Blog</a>
-            </li>
-            <li>
-              <a href='#'>About</a>
-            </li>
-            <li>
-              <a href='#'>Contact</a>
+              <Link to="/" onClick={this.props.onLinkClick}>Home</Link>
             </li>
           </ul>
         </div>

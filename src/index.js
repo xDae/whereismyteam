@@ -8,6 +8,8 @@ import { requireAuth, notRequireAuth } from './utils/require-auth';
 import App from './App';
 import Landing from './pages/Landing';
 import Home from './pages/Home';
+import Settings from './pages/Settings';
+import NewTeam from './pages/NewTeam';
 import Room from './pages/Room';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -19,7 +21,11 @@ ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Landing}/>
-      <Route path="home" component={Home} onEnter={requireAuth} />
+      <Route path="home" component={({ children }) => children} onEnter={requireAuth}>
+        <IndexRoute component={Home}/>
+        <Route path="settings" component={Settings} />
+        <Route path="new-team" component={NewTeam} />
+      </Route>
       <Route path="room/:roomId" component={Room} />
       <Route path="login" component={Login} onEnter={notRequireAuth} />
       <Route path="register" component={Register} onEnter={notRequireAuth} />

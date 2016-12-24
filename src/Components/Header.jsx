@@ -26,7 +26,7 @@ class Header extends Component {
     if (this.state.user) {
       return (
         <div className="header-right">
-          <span className="username">{this.state.user.name}</span>
+          <Link to="/home/settings" className="username">{this.state.user.displayName}</Link>
           <Logout />
         </div>
       )
@@ -52,10 +52,9 @@ class Header extends Component {
           <i className="fa fa-bars"></i>
         </a>
 
-        <IndexLink to="/" className="logo">whereismyteam</IndexLink>
+        <IndexLink to={this.state.user ? "/home" : "/"} className="logo">whereismyteam</IndexLink>
 
         {this.renderName()}
-
       </header>
     );
   }

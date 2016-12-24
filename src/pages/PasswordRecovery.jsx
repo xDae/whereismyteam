@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
+
 import base from './../firebase-config.js';
-import { login } from './../utils/login';
+import Box from './../Components/Box';
 
 class PasswordRecovery extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      error: null,
       email: ''
     }
   }
@@ -19,24 +21,38 @@ class PasswordRecovery extends Component {
     }, this.errorHandler);
   }
 
-  errorHandler = (err) => {
-    console.log(err);
+  errorHandler = error => {
+    let { code, message } = error;
+      this.setState({
+        error: { code, message }
+      });
   }
 
   handleEmailChange = event => this.setState({ email: event.target.value });
 
   render() {
     return (
-      <div className="new-event">
+      <Box>
         <h3>Password recovery</h3>
 
         <div className="section">
-          <strong className="title">email login</strong>
+          {this.state.error && (
+            <div className="alert alert-danger alert-dismissible fade in" role="alert">
+              <button
+                onClick={() => this.setState({ error: null })}
+                type="button"
+                className="close"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+              {this.state.error.message}
+            </div>
+          )}
 
           <form>
             <div className="form-group row">
-              <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Email</label>
-              <div className="col-sm-10">
+              <div className="col-sm-12">
                 <input
                   type="email"
                   className="form-control"
@@ -49,12 +65,12 @@ class PasswordRecovery extends Component {
             </div>
             <div className="form-group row">
               <div className="offset-sm-2 col-sm-12">
-                <button type="submit" className="btn btn-primary" onClick={this.recover}>recover my mail</button>
+                <button type="submit" className="btn btn-primary" onClick={this.recover}>recover my password</button>
               </div>
             </div>
           </form>
         </div>
-      </div>
+      </Box>
     );
   }
 }

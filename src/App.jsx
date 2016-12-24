@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import localforage from "localforage";
+import Helmet from "react-helmet";
 import classNames from 'classnames';
+import localforage from "localforage";
 
 import Header from './Components/Header';
 import Sidebar from './Components/Sidebar';
@@ -20,6 +21,7 @@ class App extends Component {
     return { currentUser: this.state.user };
   }
 
+
   constructor(props) {
     super(props)
 
@@ -37,15 +39,14 @@ class App extends Component {
 
   authDataCallback = user => {
     if (user) {
-      console.log("User " + user.uid + " is logged in with " + user.providerId);
+    let { displayName, email, photoURL, providerId, uid } = user;
+
+      console.log(`User ${uid} is logged in with ${providerId}`);
 
       this.setState({
         user: {
-          name: user.displayName,
-          uid: user.uid,
-          providerId: user.providerId
-        },
-        photoURL: user.photoURL
+          displayName, email, photoURL, providerId, uid
+        }
       });
     } else {
       console.log("User is logged out");
@@ -61,13 +62,13 @@ class App extends Component {
     return 'Anonymous';
   }
 
-  onCloseSidebar = () => {
+  handleCloseSidebar = () => {
     this.setState({
       sidebarOpen: false
     });
   }
 
-  onOpenSidebar = () => {
+  handleOpenSidebar = () => {
     console.log('open!');
     this.setState({
       sidebarOpen: true
@@ -81,16 +82,20 @@ class App extends Component {
 
     return (
       <div className="h100">
-        <div
-          className={bgClass}
-          onClick={this.onCloseSidebar}
+        <Helmet
+          htmlAttributes={{ lang: "en" }}
+          title="whereismyteam"
         />
+
+        <div className={bgClass} onClick={this.handleCloseSidebar} />
+
         <Sidebar
           isActive={this.state.sidebarOpen}
-          onCloseBtn={this.onCloseSidebar}
+          onCloseBtn={this.handleCloseSidebar}
+          onLinkClick={this.handleCloseSidebar}
         />
         <div id="wrapper">
-          <Header onOpenBtn={this.onOpenSidebar} />
+          <Header onOpenBtn={this.handleOpenSidebar} />
           <main id="main">
             <div className="container">
               {this.props.children}

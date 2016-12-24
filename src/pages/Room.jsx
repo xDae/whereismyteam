@@ -33,7 +33,8 @@ class Room extends Component {
       } else {
         return value;
       }
-    }).then(user => {
+    })
+    .then(user => {
       this.setState({
         currentUser: user
       }, this.connectUser2room(user));
@@ -41,12 +42,13 @@ class Room extends Component {
     const ref = base.database().ref(`rooms/${this.props.params.roomId}/${user}`);
 
     ref.onDisconnect().update({ onlineStatus: false });
-    }).catch(err => {
+    })
+    .catch(err => {
       console.log(err);
     });
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     base.removeBinding(this.ref);
   }
 
@@ -55,7 +57,8 @@ class Room extends Component {
       data: {
         onlineStatus: true
       }
-    }).catch(err => {
+    })
+    .catch(err => {
       throw err;
     });
   }
