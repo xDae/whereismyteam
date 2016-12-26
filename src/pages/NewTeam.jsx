@@ -1,17 +1,29 @@
 import React, {Component} from 'react';
-
+import slugify from 'voca/slugify';
+import latinise from 'voca/latinise';
 import base from './../firebase-config';
 
 import Box from './../Components/Box';
 
 class NewTeam extends Component {
+  static contextTypes = {
+      currentUser: React.PropTypes.object
+  };
+
   constructor(props, context) {
     super(props, context);
 
     this.state = {
+      // user: null,
       error: null,
       teamName: null
     }
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    // this.setState({
+    //   user: nextContext.currentUser
+    // });
   }
 
   handleNameChange = event => this.setState({ teamName: event.target.value });
@@ -28,12 +40,33 @@ class NewTeam extends Component {
   createTeam = e => {
     e.preventDefault();
 
-    const teamName = this.state.teamName;
+    const teamName = latinise(this.state.teamName);
+    const teamId = slugify(teamName);
 
-    base.post(`teams/${teamName}`, {
+    // Create the team in Firebase
+    base.post(`teams/${teamId}`, {
       data: {
-        admin: this.context.user.uid,
+        name: teamName,
+        admin: {
+          [this.context.currentUser.uid]: true
+        },
+        users: {
+          [this.context.currentUser.uid]: true
+        },
         created: base.database.ServerValue.TIMESTAMP
+      }
+    })
+    .then(() => {
+      console.log('success')
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+    // add user in the team members
+    base.update(`users/${this.context.currentUser.uid}/teams`, {
+      data: {
+        [teamId]: true
       }
     })
     .then(() => {

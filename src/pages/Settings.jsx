@@ -19,7 +19,7 @@ class Settings extends Component {
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
-    this.setState({user: nextContext.currentUser});
+    this.setState({ user: nextContext.currentUser });
   }
 
   componentDidMount() {

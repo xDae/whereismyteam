@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Helmet from "react-helmet";
 import classNames from 'classnames';
-import localforage from "localforage";
+import localforage from 'localforage';
 
 import Header from './Components/Header';
 import Sidebar from './Components/Sidebar';
@@ -52,14 +52,6 @@ class App extends Component {
       console.log("User is logged out");
       this.setState({ user: null });
     }
-  }
-
-  renderName = () => {
-    if (this.state.user) {
-      return this.state.user.name;
-    }
-
-    return 'Anonymous';
   }
 
   handleCloseSidebar = () => {

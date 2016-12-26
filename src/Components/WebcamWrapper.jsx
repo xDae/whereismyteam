@@ -1,136 +1,105 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import shortid from 'shortid';
+import base from './../firebase-config';
+
+import Webcam from "react-user-media";
+import ReactInterval from 'react-interval';
+import WebcamShot from './../Components/WebcamShot';
 
 class WebcamWrapper extends Component {
+  static contextTypes = {
+    currentUser: React.PropTypes.object
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentUser: null,
+      activeCam: true,
+      readytoScreenshot: false,
+      users: [],
+    };
+  }
+
+  componentDidMount() {
+    this.props.roomId && this.bindScreenshots();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.roomId) {
+      this.bindScreenshots();
+    }
+  }
+
+  componentWillUnmount() {
+    base.removeBinding(this.ref);
+  }
+
+  connectUser2room = user => {
+    // base.update(`rooms/${this.props.roomId}/${user}`, {
+    //   data: {
+    //     onlineStatus: true
+    //   }
+    // })
+    // .catch(err => {
+    //   throw err;
+    // });
+  }
+
+  bindScreenshots = () => {
+    this.ref = base.bindToState(`teams/${this.props.roomId}/users`, {
+      context: this,
+      state: 'users',
+      asArray: true
+    });
+  }
+
+  takeSnapshot = () => {
+    const screenshot = this.refs.webcam.captureScreenshot();
+    console.log('snapshot taked!');
+
+   base.update(`teams/${this.props.roomId}/users/${this.context.currentUser.uid}`, {
+      data: {
+        screenshot,
+        date: base.database.ServerValue.TIMESTAMP
+      }
+    })
+    .then(() => console.log('photo subida'));
+  }
+
   render() {
     return (
       <section className="instagram-feed">
         <header>
-          <h1>instagram feed</h1>
           <div className="tags">
-            <a href="#" className="btn btn-secondary">@unity_events</a>
+          {this.state.activeCam && (
+            <button className="btn btn-secondary"onClick={() => this.takeSnapshot()}>take snapshot</button>
+          )}
           </div>
         </header>
+
+        {this.state.activeCam && (
+          <Webcam
+            captureFormat="image/jpeg"
+            width={300}
+            height={225}
+            ref="webcam"
+            audio={false}
+            onSuccess={() => console.log('webcamOK')}
+            onFailure={({ name }) => console.log('EEEERROR!: ', name)}
+          />
+        )}
+
         <div className="feed">
-          <div className="item">
-            <a href="#">
-              <img src="images/insta-1.jpg" alt="algo"/>
-              <span className="caption">
-                <span className="t">
-                  <span className="c">Rockband Fest 2015</span>
-                </span>
-              </span>
-            </a>
-          </div>
-          <div className="item">
-            <a href="#">
-              <img src="images/insta-2.jpg" alt="algo"/>
-              <span className="caption">
-                <span className="t">
-                  <span className="c">Rockband Fest 2015</span>
-                </span>
-              </span>
-            </a>
-          </div>
-          <div className="item">
-            <a href="#">
-              <img src="images/insta-3.jpg" alt="algo"/>
-              <span className="caption">
-                <span className="t">
-                  <span className="c">Rockband Fest 2015</span>
-                </span>
-              </span>
-            </a>
-          </div>
-          <div className="item">
-            <a href="#">
-              <img src="images/insta-4.jpg" alt="algo"/>
-              <span className="caption">
-                <span className="t">
-                  <span className="c">Rockband Fest 2015</span>
-                </span>
-              </span>
-            </a>
-          </div>
-          <div className="item">
-            <a href="#">
-              <img src="images/insta-5.jpg" alt="algo"/>
-              <span className="caption">
-                <span className="t">
-                  <span className="c">Rockband Fest 2015</span>
-                </span>
-              </span>
-            </a>
-          </div>
-          <div className="item">
-            <a href="#">
-              <img src="images/insta-6.jpg" alt="algo"/>
-              <span className="caption">
-                <span className="t">
-                  <span className="c">Rockband Fest 2015</span>
-                </span>
-              </span>
-            </a>
-          </div>
-          <div className="item">
-            <a href="#">
-              <img src="images/insta-6.jpg" alt="algo"/>
-              <span className="caption">
-                <span className="t">
-                  <span className="c">Rockband Fest 2015</span>
-                </span>
-              </span>
-            </a>
-          </div>
-          <div className="item">
-            <a href="#">
-              <img src="images/insta-8.jpg" alt="algo"/>
-              <span className="caption">
-                <span className="t">
-                  <span className="c">Rockband Fest 2015</span>
-                </span>
-              </span>
-            </a>
-          </div>
-          <div className="item">
-            <a href="#">
-              <img src="images/insta-9.jpg" alt="algo"/>
-              <span className="caption">
-                <span className="t">
-                  <span className="c">Rockband Fest 2015</span>
-                </span>
-              </span>
-            </a>
-          </div>
-          <div className="item">
-            <a href="#">
-              <img src="images/insta-10.jpg" alt="algo"/>
-              <span className="caption">
-                <span className="t">
-                  <span className="c">Rockband Fest 2015</span>
-                </span>
-              </span>
-            </a>
-          </div>
-          <div className="item">
-            <a href="#">
-              <img src="images/insta-11.jpg" alt="algo"/>
-              <span className="caption">
-                <span className="t">
-                  <span className="c">Rockband Fest 2015</span>
-                </span>
-              </span>
-            </a>
-          </div>
-          <div className="item">
-            <a href="#">
-              <img src="images/insta-12.jpg" alt="algo"/>
-              <span className="caption">
-                <span className="t">
-                  <span className="c">Rockband Fest 2015</span>
-                </span>
-              </span>
-            </a>
-          </div>
+          {this.state.users.map(({ screenshot, onlineStatus, date }) => (
+            <WebcamShot
+              key={shortid.generate()}
+              onlineStatus={onlineStatus}
+              screenshot={screenshot}
+              date={date}
+            />
+          ))}
         </div>
       </section>
     );
