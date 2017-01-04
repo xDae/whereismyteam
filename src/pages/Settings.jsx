@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React, { Component, PropTypes } from 'react';
 import base from './../firebase-config.js';
 
 import Box from './../Components/Box';
 
 class Settings extends Component {
   static contextTypes = {
-    currentUser: React.PropTypes.object
+    currentUser: PropTypes.object
   };
 
   constructor(props, context) {
@@ -14,7 +14,8 @@ class Settings extends Component {
     this.state = {
       success: null,
       error: null,
-      user: null
+      user: null,
+      newEmail: null
     }
   }
 
@@ -25,19 +26,15 @@ class Settings extends Component {
   componentDidMount() {
     if (base.auth().currentUser) {
       this.setState({
-        user: base
-          .auth()
-          .currentUser
+        user: base.auth().currentUser
       });
     }
   }
 
-  update = e => {
+  updateProfile = e => {
     e.preventDefault();
 
-    var user = base
-      .auth()
-      .currentUser;
+    var user = base.auth().currentUser;
     console.log('current user', user);
 
     // let credential = new Promise((resolve, reject) => {   let credential =
@@ -47,13 +44,35 @@ class Settings extends Component {
     // user.updatePassword(this.state.password).then(() =>
     // console.log('updatePassword!'));
 
-    user
-      .updateProfile({displayName: this.state.user.displayName, photoURL: this.state.photo})
-      .then(() => this.setState({success: true}))
-      .catch(error => {
-        console.log(error);
-        this.setState({error: error});
-      })
+    user.updateProfile({
+      displayName: this.state.user.displayName,
+      photoURL: this.state.photo
+    })
+    .then(() => this.setState({ success: true }))
+    .catch(error => {
+      console.log(error);
+      this.setState({ error: error });
+    })
+  }
+
+  updateEmail = e => {
+    e.preventDefault();
+    const user = base.auth().currentUser;
+
+    const credential = base.auth.EmailAuthProvider.credential('pepe@pepe.es', '1234567');
+    const reAuth = user.reauthenticate(credential)
+    .then(() => console.log('holii'))
+    .catch(error => console.log(error))
+
+    user.updateEmail(this.state.newEmail)
+    .then(() => this.setState({ success: true }))
+    .catch(error => {
+      console.log(error);
+      const { code, message } = error;
+      this.setState({
+        error: { code, message }
+      });
+    })
   }
 
   handleNameChange = e => this.setState({
@@ -61,7 +80,8 @@ class Settings extends Component {
       displayName: e.target.value
     }
   });
-  // handleEmailChange = e => this.setState({ email: e.target.value });
+
+  handleEmailChange = e => this.setState({ newEmail: e.target.value });
   // handlePasswordChange = e => this.setState({ password: e.target.value });
 
   render() {
@@ -72,6 +92,13 @@ class Settings extends Component {
             <div className="alert alert-success" role="alert">
               <strong>Well done!</strong>
                Your profile has been updated.
+            </div>
+          }
+
+          {this.state.error &&
+            <div className="alert alert-danger" role="alert">
+              <strong>Something went wrong!</strong>
+               {this.state.error.message}
             </div>
           }
 
@@ -86,14 +113,37 @@ class Settings extends Component {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Name"
+                      placeholder="Your name"
                       value={this.state.user.displayName}
                       onChange={this.handleNameChange}/>
                   </div>
                 </div>
                 <div className="form-group row">
                   <div className="offset-sm-2 col-sm-12">
-                    <button type="submit" className="btn btn-primary" onClick={this.update}>update</button>
+                    <button type="submit" className="btn btn-primary" onClick={this.updateProfile}>update</button>
+                  </div>
+                </div>
+              </form>
+            }
+          </div>
+          <div className="section">
+            <strong className="title">Email</strong>
+            {this.state.user &&
+              <form>
+                <div className="form-group row">
+                  <div className="col-sm-12">
+                    <input
+                      type="email"
+                      className="form-control"
+                      placeholder="Your new email"
+                      // value="Your new email"
+                      onChange={this.handleEmailChange}
+                    />
+                  </div>
+                </div>
+                <div className="form-group row">
+                  <div className="offset-sm-2 col-sm-12">
+                    <button type="submit" className="btn btn-primary" onClick={this.updateEmail}>update email</button>
                   </div>
                 </div>
               </form>

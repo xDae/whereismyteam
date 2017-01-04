@@ -1,7 +1,10 @@
+/* global emailjs */
 import React, {Component} from 'react';
 import slugify from 'voca/slugify';
 import latinise from 'voca/latinise';
 import base from './../firebase-config';
+
+// import emailjs from './../utils/emailjs';
 
 import Box from './../Components/Box';
 
@@ -20,6 +23,11 @@ class NewTeam extends Component {
     }
   }
 
+  componentDidMount() {
+    // emailjs.init("user_4llGQuJhsnBTOy0TgKTty");
+  }
+
+
   componentWillReceiveProps(nextProps, nextContext) {
     // this.setState({
     //   user: nextContext.currentUser
@@ -28,14 +36,14 @@ class NewTeam extends Component {
 
   handleNameChange = event => this.setState({ teamName: event.target.value });
 
-  checkTeamExists = team => {
-    var teamRef = base.database().ref(`teams/${team}`);
+  // checkTeamExists = team => {
+  //   var teamRef = base.database().ref(`teams/${team}`);
 
-    return teamRef.once('value')
-      .then(snapshot => {
-        return snapshot.exists();
-      });
-  }
+  //   return teamRef.once('value')
+  //     .then(snapshot => {
+  //       return snapshot.exists();
+  //     });
+  // }
 
   createTeam = e => {
     e.preventDefault();
@@ -57,7 +65,17 @@ class NewTeam extends Component {
       }
     })
     .then(() => {
-      console.log('success')
+      emailjs.send("mailgun", "template_nLMjVwVc", {
+        email_to: this.context.currentUser.email,
+        from_name: 'whereismyteam guys',
+        to_name: "James",
+        mensaje: "Check this out!"
+      })
+      .then(function(response) {
+        console.log("SUCCESS. status=%d, text=%s", response.status, response.text);
+      }, function(err) {
+        console.log("FAILED. error=", err);
+      });
     })
     .catch(err => {
       console.log(err);

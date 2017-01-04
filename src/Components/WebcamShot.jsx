@@ -12,22 +12,21 @@ class WebcamShot extends Component {
   render() {
     return (
       <div className="item">
-        <a href="#">
-          <img src={this.props.screenshot} alt="algo"/>
-          <span className="caption">
-            <span className="t">
-              <span className="c">
-                {this.props.onlineStatus ? (
-                    <span>status: Online</span>
-                  ) : (
-                    <span>status: Offline</span>
-                  )
-                }
-                <span>{this.timeAgo(this.props.date)}</span>
-              </span>
+        <img src={this.props.screenshot} alt="algo"/>
+        <span className="caption">
+          <span className="t">
+            <span className="c">
+              {this.props.onlineStatus ? (
+                  <span>status: Online</span>
+                ) : (
+                  <span>status: Offline</span>
+                )
+              }
+              <br />
+              <span>{this.timeAgo(this.props.date)}</span>
             </span>
           </span>
-        </a>
+        </span>
       </div>
     );
   }

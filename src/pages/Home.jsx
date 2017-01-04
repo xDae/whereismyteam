@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router';
-import WebcamWrapper from './../Components/WebcamWrapper';
 import base from './../firebase-config';
 
 import Loader from './../Components/Loader';
@@ -14,8 +13,6 @@ class Home extends Component {
     super(props);
 
     this.state = {
-      loading: false,
-      activeTeam: null,
       teams: []
     };
   }
@@ -55,45 +52,43 @@ class Home extends Component {
     this.context.currentUser ? this.getTeamList() : this.setState({ loading: true });
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    // nextContext.currentUser ? this.setState({ loading: false }) : ;
-  }
-
-
   render() {
     return (
       <div>
-        <h4>teams:</h4>
+        {/*<div className="form-item country-item">
+          <span className="jcf-select jcf-unselectable">
+            <span className="jcf-select-text">
+              <span className="">GERMANY</span>
+            </span>
+            <span className="jcf-select-opener">
+              <i className="fa fa-caret-down" aria-hidden="true"></i>
+            </span>
+          </span>
+				</div>*/}
 
-        {this.state.loading ? (
-          <Loader />
-        ) : (
+        {this.state.teams.length < 1 ?
+          <div>
+            <div className="block-404">
+              <strong>Oops, Looks like you don't have any teams</strong>
+              <span>Create a new team or join to one</span>
+              <br />
+              <Link to="home/new-team" className="btn btn-primary">
+                Create a new team
+              </Link>
+            </div>
+          </div>
+          :
           <ul>
             {this.state.teams.map(team => (
               <li
                 key={team.key}
                 onClick={() => this.setState({ activeTeam: team.key })}
               >
-                {team.name}
+                <Link to={`home/team/${team.key}`}>{team.name}</Link>
               </li>
             ))}
           </ul>
-        )}
-
-        {this.state.teams.length < 1 &&
-          <div>
-            <Link to="/home/new-team" className="btn btn-primary">
-              Create a new team
-            </Link>
-          </div>
-        }
-
-        {this.state.activeTeam !== null &&
-          <WebcamWrapper
-            roomId={this.state.activeTeam}
-          />
-        }
-
+      }
       </div>
     );
   }

@@ -2366,7 +2366,7 @@ find-up@^1.0.0, find-up@^1.1.2:
     path-exists "^2.0.0"
     pinkie-promise "^2.0.0"
 
-firebase@^3.5.2:
+firebase@^3.0.3, firebase@^3.5.2:
   version "3.6.4"
   resolved "https://registry.yarnpkg.com/firebase/-/firebase-3.6.4.tgz#5c5b91d20f439b6f0a7aebe1b27c2db1a463e308"
   dependencies:
@@ -4763,6 +4763,12 @@ query-string@^4.1.0, query-string@^4.2.2:
   dependencies:
     object-assign "^4.1.0"
     strict-uri-encode "^1.0.0"
+
+querybase@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/querybase/-/querybase-0.4.0.tgz#9e70582791ffd6cc8453c23f6b1b5459e289a874"
+  dependencies:
+    firebase "^3.0.3"
 
 querystring-es3@^0.2.0:
   version "0.2.1"
