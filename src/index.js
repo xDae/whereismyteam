@@ -2,39 +2,38 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
-import { requireAuth, notRequireAuth } from './utils/require-auth';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 
-import App from './App';
-import Landing from './pages/Landing';
-import Home from './pages/Home';
-import TeamRoom from './pages/TeamRoom.jsx';
-import Settings from './pages/Settings';
-import NewTeam from './pages/NewTeam';
-import Room from './pages/Room';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import PasswordRecovery from './pages/PasswordRecovery';
-import Logout from './pages/Logout';
-import NotFound from './pages/NotFound';
+import thunk from 'redux-thunk';
+import createLogger from 'redux-logger';
+
+import routes from './Routes';
+
+import { Router, browserHistory } from 'react-router';
+
+const logger = createLogger();
+
+const nameInitialState = {}
+export const reducer = (state = nameInitialState, action) => {
+  switch (action.type) {
+    case 'ACTION_TYPE_1':
+      return state
+    case 'ACTION_TYPE_2':
+      return state
+    default:
+      return state
+  }
+}
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducer, composeEnhancers(
+  applyMiddleware(thunk, logger)
+));
 
 ReactDOM.render(
-  <Router history={browserHistory}>
-    <Route path="/" component={App}>
-      <IndexRoute component={Landing} />
-      <Route path="home" component={({ children }) => children} onEnter={requireAuth}>
-        <IndexRoute component={Home} />
-        <Route path="team/:teamId" component={TeamRoom} />
-        <Route path="settings" component={Settings} />
-        <Route path="new-team" component={NewTeam} />
-      </Route>
-      <Route path="room/:roomId" component={Room} />
-      <Route path="login" component={Login} onEnter={notRequireAuth} />
-      <Route path="register" component={Register} onEnter={notRequireAuth} />
-      <Route path="passwordrecover" component={PasswordRecovery} onEnter={notRequireAuth} />
-      <Route path="logout" component={Logout} />
-      <Route path="*" component={NotFound}/>
-    </Route>
-  </Router>,
+  <Provider store={store}>
+    <Router history={browserHistory} routes={routes} />
+  </Provider>,
   document.getElementById('root')
 );
