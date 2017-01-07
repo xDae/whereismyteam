@@ -37,43 +37,35 @@ class Settings extends Component {
     var user = base.auth().currentUser;
     console.log('current user', user);
 
-    // let credential = new Promise((resolve, reject) => {   let credential =
-    // base.auth.EmailAuthProvider.credential('pepe@pepe.es', '1234567');   const
-    // reAuth = user.reauthenticate(credential)     .then(() =>
-    // resolve('Success!'));   else {     reject('Failure!');   } });
-    // user.updatePassword(this.state.password).then(() =>
-    // console.log('updatePassword!'));
-
     user.updateProfile({
       displayName: this.state.user.displayName,
       photoURL: this.state.photo
     })
     .then(() => this.setState({ success: true }))
     .catch(error => {
-      console.log(error);
-      this.setState({ error: error });
+      this.setState({ error });
     })
   }
 
-  updateEmail = e => {
-    e.preventDefault();
-    const user = base.auth().currentUser;
+  // updateEmail = e => {
+  //   e.preventDefault();
+  //   const user = base.auth().currentUser;
 
-    const credential = base.auth.EmailAuthProvider.credential('pepe@pepe.es', '1234567');
-    const reAuth = user.reauthenticate(credential)
-    .then(() => console.log('holii'))
-    .catch(error => console.log(error))
+  //   const credential = base.auth.EmailAuthProvider.credential('pepe@pepe.es', '1234567');
+  //   const reAuth = user.reauthenticate(credential)
+  //   .then(() => console.log('holii'))
+  //   .catch(error => console.log(error))
 
-    user.updateEmail(this.state.newEmail)
-    .then(() => this.setState({ success: true }))
-    .catch(error => {
-      console.log(error);
-      const { code, message } = error;
-      this.setState({
-        error: { code, message }
-      });
-    })
-  }
+  //   user.updateEmail(this.state.newEmail)
+  //   .then(() => this.setState({ success: true }))
+  //   .catch(error => {
+  //     console.log(error);
+  //     const { code, message } = error;
+  //     this.setState({
+  //       error: { code, message }
+  //     });
+  //   })
+  // }
 
   handleNameChange = e => this.setState({
     user: {
@@ -90,8 +82,7 @@ class Settings extends Component {
         <Box>
           {this.state.success &&
             <div className="alert alert-success" role="alert">
-              <strong>Well done!</strong>
-               Your profile has been updated.
+              <strong>Well done!</strong> Your profile has been updated.
             </div>
           }
 
@@ -126,7 +117,7 @@ class Settings extends Component {
               </form>
             }
           </div>
-          <div className="section">
+          {/*<div className="section">
             <strong className="title">Email</strong>
             {this.state.user &&
               <form>
@@ -148,7 +139,7 @@ class Settings extends Component {
                 </div>
               </form>
             }
-          </div>
+          </div>*/}
         </Box>
       </div>
     );

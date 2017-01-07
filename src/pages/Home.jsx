@@ -55,7 +55,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        {/*<div className="form-item country-item">
+        {<div className="form-item country-item">
           <span className="jcf-select jcf-unselectable">
             <span className="jcf-select-text">
               <span className="">GERMANY</span>
@@ -64,12 +64,12 @@ class Home extends Component {
               <i className="fa fa-caret-down" aria-hidden="true"></i>
             </span>
           </span>
-				</div>*/}
+				</div>}
 
         {this.state.teams.length < 1 ?
           <div>
             <div className="block-404">
-              <strong>Oops, Looks like you don't have any teams</strong>
+              {/*<strong>Oops, Looks like you don't have any teams</strong>*/}
               <span>Create a new team or join to one</span>
               <br />
               <Link to="home/new-team" className="btn btn-primary">

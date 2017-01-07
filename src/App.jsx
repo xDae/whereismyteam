@@ -27,7 +27,6 @@ class App extends Component {
 
     this.state = {
       sidebarOpen: false,
-      activeCam: true,
       user: null
     };
   }
@@ -39,7 +38,7 @@ class App extends Component {
 
   authDataCallback = user => {
     if (user) {
-    let { displayName, email, photoURL, providerId, uid } = user;
+      let { displayName, email, photoURL, providerId, uid } = user;
 
       console.log(`User ${uid} is logged in with ${providerId}`);
 

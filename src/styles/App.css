@@ -134,22 +134,22 @@ video {
   }
 }
 
-.ball-pulse>div:nth-child(1) {
+.ball-pulse > div:nth-child(1) {
   -webkit-animation: scale 0.75s -0.24s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08);
   animation: scale 0.75s -0.24s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08);
 }
 
-.ball-pulse>div:nth-child(2) {
+.ball-pulse > div:nth-child(2) {
   -webkit-animation: scale 0.75s -0.12s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08);
   animation: scale 0.75s -0.12s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08);
 }
 
-.ball-pulse>div:nth-child(3) {
+.ball-pulse > div:nth-child(3) {
   -webkit-animation: scale 0.75s 0s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08);
   animation: scale 0.75s 0s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08);
 }
 
-.ball-pulse>div {
+.ball-pulse > div {
   background-color: #e64614;
   width: 15px;
   height: 15px;
@@ -158,4 +158,40 @@ video {
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
   display: inline-block;
+}
+
+.container {
+  max-width: 100% !important;
+}
+
+
+.pulse-button {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50px;
+  /*background-image: linear-gradient(top, rgb(21, 0, 0), rgb(145, 0, 0));*/
+  background-color: green;
+  box-shadow: 0 0 0 0 rgb(21, 108, 249);
+  -webkit-animation: pulse 2.5s infinite;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  90% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(21, 108, 249,0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(21, 108, 249, 0);
+  }
+}
+
+.feed .item .pulse-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }

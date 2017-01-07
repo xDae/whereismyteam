@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import base from './../firebase-config.js';
 
 import LoginContainer from './../Components/LoginContainer';

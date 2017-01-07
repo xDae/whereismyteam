@@ -21,9 +21,9 @@ import NotFound from './pages/NotFound';
 ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <IndexRoute component={Landing}/>
+      <IndexRoute component={Landing} />
       <Route path="home" component={({ children }) => children} onEnter={requireAuth}>
-        <IndexRoute component={Home}/>
+        <IndexRoute component={Home} />
         <Route path="team/:teamId" component={TeamRoom} />
         <Route path="settings" component={Settings} />
         <Route path="new-team" component={NewTeam} />

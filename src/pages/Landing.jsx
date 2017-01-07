@@ -19,7 +19,7 @@ class Landing extends Component {
           {currentUser && <Link to="/home">Go to Home</Link>}
 
           <br/>
-          <Link className="btn btn-primary" to={`/room/${shortid.generate()}`}>generar sala aleatoria</Link>
+          {/*<Link className="btn btn-primary" to={`/room/${shortid.generate()}`}>generar sala aleatoria</Link>*/}
       </div>
     );
   }

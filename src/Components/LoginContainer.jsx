@@ -2,10 +2,7 @@ import React, {Component} from 'react';
 import { withRouter } from 'react-router';
 import base from './../firebase-config';
 
-// import { login } from './../utils/login';
-
 class LoginContainer extends Component {
-
   login = provider => {
     const authHandler = (error, user) => {
         if (error) {

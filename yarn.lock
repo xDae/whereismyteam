@@ -2366,7 +2366,7 @@ find-up@^1.0.0, find-up@^1.1.2:
     path-exists "^2.0.0"
     pinkie-promise "^2.0.0"
 
-firebase@^3.0.3, firebase@^3.5.2:
+firebase@^3.5.2, firebase@^3.6.1:
   version "3.6.4"
   resolved "https://registry.yarnpkg.com/firebase/-/firebase-3.6.4.tgz#5c5b91d20f439b6f0a7aebe1b27c2db1a463e308"
   dependencies:
@@ -4764,11 +4764,11 @@ query-string@^4.1.0, query-string@^4.2.2:
     object-assign "^4.1.0"
     strict-uri-encode "^1.0.0"
 
-querybase@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/querybase/-/querybase-0.4.0.tgz#9e70582791ffd6cc8453c23f6b1b5459e289a874"
+querybase@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/querybase/-/querybase-0.6.0.tgz#b65e161fcf7d55dd38f43e960d06c485f9de7e54"
   dependencies:
-    firebase "^3.0.3"
+    firebase "^3.6.1"
 
 querystring-es3@^0.2.0:
   version "0.2.1"
@@ -4813,9 +4813,9 @@ rc@^1.0.1, rc@^1.1.6, rc@~1.1.6:
     minimist "^1.2.0"
     strip-json-comments "~1.0.4"
 
-re-base@^2.5.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/re-base/-/re-base-2.5.1.tgz#f49b7e6255dfe931e5af0e43e59bb1b270a6677a"
+re-base@^2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/re-base/-/re-base-2.5.2.tgz#d2f43c2c51588744ed3f9373d89604d74728709e"
   dependencies:
     firebase "^3.5.2"
 
@@ -4839,9 +4839,9 @@ react-dom@^15.4.1:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
 
-react-helmet@^3.2.3:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-3.2.3.tgz#ac81cf77e2b1075f57e1f5ef4ba281c9c9fa4c95"
+react-helmet@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-3.3.0.tgz#419933e7ce5a75d04aab3fefe77169eed8e55646"
   dependencies:
     deep-equal "1.0.1"
     object-assign "^4.0.1"
@@ -5933,9 +5933,9 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
-voca@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/voca/-/voca-1.0.0.tgz#667194bbea53dfafc5fc94be989c588f80c600f1"
+voca@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/voca/-/voca-1.1.0.tgz#f0750731ee4b2d28d3d0a993648df123b5055afa"
 
 walkdir@0.0.11:
   version "0.0.11"

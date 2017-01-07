@@ -4,8 +4,7 @@ import slugify from 'voca/slugify';
 import latinise from 'voca/latinise';
 import base from './../firebase-config';
 
-// import emailjs from './../utils/emailjs';
-
+import InvitationEmail from './../Components/InvitationEmail';
 import Box from './../Components/Box';
 
 class NewTeam extends Component {
@@ -19,19 +18,16 @@ class NewTeam extends Component {
     this.state = {
       // user: null,
       error: null,
-      teamName: null
+      teamName: null,
+      success: null,
+      step: 1
     }
   }
 
   componentDidMount() {
-    // emailjs.init("user_4llGQuJhsnBTOy0TgKTty");
   }
 
-
   componentWillReceiveProps(nextProps, nextContext) {
-    // this.setState({
-    //   user: nextContext.currentUser
-    // });
   }
 
   handleNameChange = event => this.setState({ teamName: event.target.value });
@@ -45,55 +41,95 @@ class NewTeam extends Component {
   //     });
   // }
 
-  createTeam = e => {
-    e.preventDefault();
+  sendEmail = () => {
+    return emailjs.send('mailgun', 'template_nLMjVwVc', {
+      email_to: this.context.currentUser.email,
+      from_name: 'whereismyteam guys',
+      to_name: 'James',
+      mensaje: 'Check this out!'
+    });
+  }
 
-    const teamName = latinise(this.state.teamName);
-    const teamId = slugify(teamName);
-
-    // Create the team in Firebase
-    base.post(`teams/${teamId}`, {
+  registerTeam = (id, name, adminId) => {
+    return base.post(`teams/${id}`, {
       data: {
-        name: teamName,
+        name,
         admin: {
-          [this.context.currentUser.uid]: true
+          [adminId]: true
         },
         users: {
-          [this.context.currentUser.uid]: true
+          [adminId]: true
         },
         created: base.database.ServerValue.TIMESTAMP
       }
-    })
-    .then(() => {
-      emailjs.send("mailgun", "template_nLMjVwVc", {
-        email_to: this.context.currentUser.email,
-        from_name: 'whereismyteam guys',
-        to_name: "James",
-        mensaje: "Check this out!"
-      })
-      .then(function(response) {
-        console.log("SUCCESS. status=%d, text=%s", response.status, response.text);
-      }, function(err) {
-        console.log("FAILED. error=", err);
+    });
+  }
+
+  addUser = (userid, teamId) => {
+    return new Promise ((resolve, reject) => {
+      return base.update(`users/${userid}/teams`, {
+        data: {
+          [teamId]: true
+        }
       });
     })
-    .catch(err => {
-      console.log(err);
-    });
+  }
 
-    // add user in the team members
-    base.update(`users/${this.context.currentUser.uid}/teams`, {
-      data: {
-        [teamId]: true
-      }
-    })
-    .then(() => {
-      console.log('success')
-    })
-    .catch(err => {
-      console.log(err);
-    });
+  createTeam = e => {
+    e.preventDefault();
 
+    if (this.state.teamName !== null) {
+      const teamName = latinise(this.state.teamName);
+      const teamId = slugify(teamName);
+
+      this.registerTeam(teamId, teamName, this.context.currentUser.uid)
+      .then(() => {
+        this.addUser(this.context.currentUser.uid, teamId);
+      })
+      .then(() => {
+        this.setState({ step: 2 });
+      })
+      .catch(err => {
+        this.setState({
+          error: {
+            message: 'caca'
+          },
+        });
+      });
+    } else {
+      this.setState({
+        error: {
+          message: 'error'
+        }
+      });
+    }
+  }
+
+  printStep = step => {
+    if (step === 2) {
+      return <InvitationEmail />
+    } else {
+      return (
+        <form>
+          <div className="form-group row">
+            <div className="col-sm-12">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Team's name"
+                value={this.state.email}
+                onChange={this.handleNameChange}
+              />
+            </div>
+          </div>
+          <div className="form-group row">
+            <div className="offset-sm-2 col-sm-12">
+              <button type="submit" className="btn btn-primary" onClick={this.createTeam}>Create</button>
+            </div>
+          </div>
+        </form>
+      )
+    }
   }
 
   render() {
@@ -108,33 +144,14 @@ class NewTeam extends Component {
                 onClick={() => this.setState({ error: null })}
                 type="button"
                 className="close"
-                aria-label="Close"
               >
-                <span aria-hidden="true">&times;</span>
+                <span>&times;</span>
               </button>
               {this.state.error.message}
             </div>
           )}
 
-          <form>
-            <div className="form-group row">
-              <div className="col-sm-12">
-                <label>Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Team's name"
-                  value={this.state.email}
-                  onChange={this.handleNameChange}
-                />
-              </div>
-            </div>
-            <div className="form-group row">
-              <div className="offset-sm-2 col-sm-12">
-                <button type="submit" className="btn btn-primary" onClick={this.createTeam}>Create</button>
-              </div>
-            </div>
-          </form>
+          {this.printStep(this.state.step)}
         </div>
       </Box>
     );

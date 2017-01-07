@@ -6,10 +6,13 @@ import Webcam from "react-user-media";
 import ReactInterval from 'react-interval';
 import WebcamShot from './../Components/WebcamShot';
 
+import shot from './../images/screenshot.jpeg';
+
 class WebcamWrapper extends Component {
   static contextTypes = {
     currentUser: React.PropTypes.object
   }
+
 
   constructor(props) {
     super(props);
@@ -18,17 +21,43 @@ class WebcamWrapper extends Component {
       currentUser: null,
       activeCam: true,
       readytoScreenshot: false,
-      users: [],
+      users: [
+        {
+          date: 1483642493872,
+          key: shortid.generate(),
+          screenshot: shot
+        },
+        {
+          date: 1445642493872,
+          key: shortid.generate(),
+          screenshot: shot
+        },
+        {
+          date: 1483678493872,
+          key: shortid.generate(),
+          screenshot: shot
+        },
+        {
+          date: 1483644593872,
+          key: shortid.generate(),
+          screenshot: shot
+        },
+        {
+          date: 144542493872,
+          key: shortid.generate(),
+          screenshot: shot
+        }
+      ],
     };
   }
 
   componentDidMount() {
-    this.props.roomId && this.bindScreenshots();
+    // this.props.roomId && this.bindScreenshots();
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.roomId) {
-      this.bindScreenshots();
+      // this.bindScreenshots();
     }
   }
 

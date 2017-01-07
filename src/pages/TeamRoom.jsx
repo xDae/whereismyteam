@@ -12,7 +12,9 @@ class TeamRoom extends Component {
   render() {
     return (
       <div>
-        <WebcamWrapper />
+        <WebcamWrapper
+          roomId={this.props.params.teamId}
+        />
       </div>
     );
   }

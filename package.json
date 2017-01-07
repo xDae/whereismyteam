@@ -10,7 +10,7 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "localforage": "^1.4.3",
-    "lodash": "^4.17.3",
+    "lodash": "^4.17.4",
     "npm-check": "^5.4.0",
     "querybase": "^0.6.0",
     "re-base": "^2.5.2",
