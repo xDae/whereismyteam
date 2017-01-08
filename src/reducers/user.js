@@ -1,15 +1,13 @@
 
 
-const InitialState = {
-  user: null
-};
-
-const userReducer = (state = InitialState, action) => {
+const userReducer = (state = null, action) => {
   switch (action.type) {
     case 'FETCH_USER':
       return state
     case 'USER_FETCHED':
-      return {...state, user: action.payload }
+      return action.payload
+      case 'LOGOUT_USER':
+      return null
     default:
       return state
   }

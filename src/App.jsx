@@ -22,20 +22,21 @@ class App extends Component {
     super(props)
 
     this.state = {
-      sidebarOpen: false,
-      user: null
+      sidebarOpen: false
     };
+  }
+
+  fetchUser = () => {
+    this.props.fetchUser();
+    const authDataCallback = user => user && this.props.userFetched(user);
+
+    base.onAuth(authDataCallback());
   }
 
   componentDidMount() {
     // localforage.config();
-    this.props.fetchUser();
-
-    base.onAuth(this.authDataCallback);
-    fetchUser();
+    this.fetchUser();
   }
-
-  authDataCallback = user => user && this.props.userFetched(user);
 
   handleCloseSidebar = () => {
     this.setState({
@@ -69,7 +70,7 @@ class App extends Component {
           onLinkClick={this.handleCloseSidebar}
         />
         <div id="wrapper">
-          <Header user={this.props.user.user} onOpenBtn={this.handleOpenSidebar} />
+          <Header user={this.props.user} onOpenBtn={this.handleOpenSidebar} />
           <main id="main">
             <div className="container">
               {this.props.children}
