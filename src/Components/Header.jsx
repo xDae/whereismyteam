@@ -4,29 +4,11 @@ import { IndexLink, Link } from 'react-router';
 import Logout from './../Components/Logout';
 
 class Header extends Component {
-  static contextTypes = {
-      currentUser: React.PropTypes.object
-  };
-
-  constructor(props, context) {
-    super(props, context);
-
-    this.state = {
-      user: null
-    }
-  }
-
-  componentWillReceiveProps(nextProps, nextContext) {
-    this.setState({
-      user: nextContext.currentUser
-    });
-  }
-
   renderName = () => {
-    if (this.state.user) {
+    if (this.props.user) {
       return (
         <div className="header-right">
-          <Link to="/home/settings" className="username">{this.state.user.displayName}</Link>
+          <Link to="/home/settings" className="username">{this.props.user.displayName}</Link>
           <Logout />
         </div>
       )
@@ -52,7 +34,7 @@ class Header extends Component {
           <i className="fa fa-bars"></i>
         </a>
 
-        <IndexLink to={this.state.user ? "/home" : "/"} className="logo">whereismyteam</IndexLink>
+        <IndexLink to={this.props.user ? "/home" : "/"} className="logo">whereismyteam</IndexLink>
 
         {this.renderName()}
       </header>

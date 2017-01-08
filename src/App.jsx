@@ -1,8 +1,13 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Helmet from "react-helmet";
 import classNames from 'classnames';
-import localforage from 'localforage';
+// import localforage from 'localforage';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchUser, userFetched } from './actions/user';
+
+// Components
 import Header from './Components/Header';
 import Sidebar from './Components/Sidebar';
 import Footer from './Components/Footer';
@@ -13,15 +18,6 @@ import './styles/main.css';
 import './styles/App.css';
 
 class App extends Component {
-  static childContextTypes = {
-    currentUser: React.PropTypes.object
-  };
-
-  getChildContext() {
-    return { currentUser: this.state.user };
-  }
-
-
   constructor(props) {
     super(props)
 
@@ -32,26 +28,14 @@ class App extends Component {
   }
 
   componentDidMount() {
+    // localforage.config();
+    this.props.fetchUser();
+
     base.onAuth(this.authDataCallback);
-    localforage.config();
+    fetchUser();
   }
 
-  authDataCallback = user => {
-    if (user) {
-      let { displayName, email, photoURL, providerId, uid } = user;
-
-      console.log(`User ${uid} is logged in with ${providerId}`);
-
-      this.setState({
-        user: {
-          displayName, email, photoURL, providerId, uid
-        }
-      });
-    } else {
-      console.log("User is logged out");
-      this.setState({ user: null });
-    }
-  }
+  authDataCallback = user => user && this.props.userFetched(user);
 
   handleCloseSidebar = () => {
     this.setState({
@@ -85,7 +69,7 @@ class App extends Component {
           onLinkClick={this.handleCloseSidebar}
         />
         <div id="wrapper">
-          <Header onOpenBtn={this.handleOpenSidebar} />
+          <Header user={this.props.user.user} onOpenBtn={this.handleOpenSidebar} />
           <main id="main">
             <div className="container">
               {this.props.children}
@@ -97,4 +81,13 @@ class App extends Component {
     );
   }
 }
-export default App;
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ fetchUser, userFetched }, dispatch);
+}
+
+function mapStateToProps({ user }) {
+    return { user };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
