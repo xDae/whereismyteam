@@ -29,13 +29,17 @@ class App extends Component {
   fetchUser = () => {
     this.props.fetchUser();
     const authDataCallback = user => user && this.props.userFetched(user);
-
-    base.onAuth(authDataCallback());
+    this.auth = base.onAuth(authDataCallback);
   }
 
   componentDidMount() {
     // localforage.config();
     this.fetchUser();
+  }
+
+  componentWillUnmount() {
+    // remove the auth listener on exit
+    this.auth();
   }
 
   handleCloseSidebar = () => {
@@ -70,7 +74,10 @@ class App extends Component {
           onLinkClick={this.handleCloseSidebar}
         />
         <div id="wrapper">
-          <Header user={this.props.user} onOpenBtn={this.handleOpenSidebar} />
+          <Header
+            user={this.props.user}
+            onOpenBtn={this.handleOpenSidebar}
+          />
           <main id="main">
             <div className="container">
               {this.props.children}
