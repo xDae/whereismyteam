@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Link } from 'react-router';
 import base from './../firebase-config';
 
-import Loader from './../Components/Loader';
+// import Loader from './../Components/Loader';
 
 class Home extends Component {
   static contextTypes = {

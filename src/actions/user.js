@@ -1,7 +1,15 @@
+import base from './../firebase-config';
+
 export function fetchUser() {
-  return {
-    type: 'FETCH_USER',
-  };
+  return dispatch => {
+    dispatch({
+      type: 'FETCH_USER'
+    });
+
+    const authDataCallback = user => user && dispatch(userFetched(user));
+
+    base.onAuth(authDataCallback);
+  }
 }
 
 export function userFetched(user) {

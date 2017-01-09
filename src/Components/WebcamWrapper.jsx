@@ -3,7 +3,7 @@ import shortid from 'shortid';
 import base from './../firebase-config';
 
 import Webcam from "react-user-media";
-import ReactInterval from 'react-interval';
+// import ReactInterval from 'react-interval';
 import WebcamShot from './../Components/WebcamShot';
 
 import shot from './../images/screenshot.jpeg';

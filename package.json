@@ -4,7 +4,7 @@
   "private": true,
   "devDependencies": {
     "flow-bin": "^0.37.3",
-    "react-scripts": "0.8.4"
+    "react-scripts": "^0.8.5"
   },
   "dependencies": {
     "classnames": "^2.2.5",

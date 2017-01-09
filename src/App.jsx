@@ -5,14 +5,12 @@ import classNames from 'classnames';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchUser, userFetched } from './actions/user';
+import { fetchUser } from './actions/user';
 
 // Components
 import Header from './Components/Header';
 import Sidebar from './Components/Sidebar';
 import Footer from './Components/Footer';
-
-import base from './firebase-config';
 
 import './styles/main.css';
 import './styles/App.css';
@@ -26,20 +24,9 @@ class App extends Component {
     };
   }
 
-  fetchUser = () => {
-    this.props.fetchUser();
-    const authDataCallback = user => user && this.props.userFetched(user);
-    this.auth = base.onAuth(authDataCallback);
-  }
-
   componentDidMount() {
     // localforage.config();
-    this.fetchUser();
-  }
-
-  componentWillUnmount() {
-    // remove the auth listener on exit
-    this.auth();
+    this.props.fetchUser();
   }
 
   handleCloseSidebar = () => {
@@ -91,7 +78,7 @@ class App extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ fetchUser, userFetched }, dispatch);
+    return bindActionCreators({ fetchUser }, dispatch);
 }
 
 function mapStateToProps({ user }) {
