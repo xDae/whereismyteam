@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { IndexLink, Link } from 'react-router';
 
-import Logout from './../Components/Logout';
+// import Logout from './../Components/Logout';
 
 class Header extends Component {
   renderName = () => {
@@ -9,7 +9,12 @@ class Header extends Component {
       return (
         <div className="header-right">
           <Link to="/home/settings" className="username">{this.props.user.displayName}</Link>
-          <Logout />
+          <button
+            className="btn btn-secondary"
+            onClick={this.props.onLogout}
+          >
+            Logout
+          </button>
         </div>
       )
     }

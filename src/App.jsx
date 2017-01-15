@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchUser } from './actions/user';
+import { fetchUser, logout } from './actions/user';
 
 // Components
 import Header from './Components/Header';
@@ -41,6 +41,10 @@ class App extends Component {
     });
   }
 
+  handleLogout = () => {
+    this.props.logout();
+  }
+
   render() {
     const bgClass = classNames('du', 'font_bg', this.props.className, {
       'new_bg': this.state.sidebarOpen
@@ -64,6 +68,7 @@ class App extends Component {
           <Header
             user={this.props.user}
             onOpenBtn={this.handleOpenSidebar}
+            onLogout={this.handleLogout}
           />
           <main id="main">
             <div className="container">
@@ -78,7 +83,7 @@ class App extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ fetchUser }, dispatch);
+    return bindActionCreators({ fetchUser, logout }, dispatch);
 }
 
 function mapStateToProps({ user }) {

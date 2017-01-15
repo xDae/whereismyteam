@@ -1,14 +1,13 @@
-import React, {Component} from 'react';
+import React, {Component } from 'react';
+import { connect } from 'react-redux';
+// import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
+
 import base from './../firebase-config';
 
 // import Loader from './../Components/Loader';
 
 class Home extends Component {
-  static contextTypes = {
-      currentUser: React.PropTypes.object
-  }
-
   constructor(props) {
     super(props);
 
@@ -55,7 +54,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        {<div className="form-item country-item">
+        {/*<div className="form-item country-item">
           <span className="jcf-select jcf-unselectable">
             <span className="jcf-select-text">
               <span className="">GERMANY</span>
@@ -64,7 +63,7 @@ class Home extends Component {
               <i className="fa fa-caret-down" aria-hidden="true"></i>
             </span>
           </span>
-				</div>}
+				</div>*/}
 
         {this.state.teams.length < 1 ?
           <div>
@@ -94,4 +93,8 @@ class Home extends Component {
   }
 }
 
-export default Home;
+function mapStateToProps({ user }) {
+    return { user };
+}
+
+export default connect(mapStateToProps)(Home);

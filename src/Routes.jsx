@@ -7,6 +7,7 @@ import { requireAuth, notRequireAuth } from './utils/require-auth';
 import App from './App';
 import Landing from './pages/Landing';
 import Home from './pages/Home';
+import Main from './pages/Main';
 import TeamRoom from './pages/TeamRoom.jsx';
 import Settings from './pages/Settings';
 import NewTeam from './pages/NewTeam';
@@ -20,7 +21,7 @@ import NotFound from './pages/NotFound';
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={Landing} />
-    <Route path="home" component={({ children }) => children} onEnter={requireAuth}>
+    <Route path="home" component={Main} onEnter={requireAuth}>
       <IndexRoute component={Home} />
       <Route path="team/:teamId" component={TeamRoom} />
       <Route path="settings" component={Settings} />

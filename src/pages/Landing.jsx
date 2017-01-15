@@ -3,10 +3,6 @@ import { Link } from 'react-router';
 // import shortid from 'shortid';
 
 class Landing extends Component {
-  static contextTypes = {
-      currentUser: React.PropTypes.object
-  };
-
   render() {
     const { currentUser } = this.context;
     return (

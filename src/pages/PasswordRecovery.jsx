@@ -56,7 +56,6 @@ class PasswordRecovery extends Component {
                 <input
                   type="email"
                   className="form-control"
-                  id="inputEmail3"
                   placeholder="Email"
                   value={this.state.email}
                   onChange={this.handleEmailChange}
