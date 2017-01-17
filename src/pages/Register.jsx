@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import base from './../firebase-config.js';
 
+// Components
 import LoginContainer from './../Components/LoginContainer';
+import Button from './../Components/Button';
 
 class Register extends Component {
   constructor(props) {
@@ -95,7 +97,7 @@ class Register extends Component {
               </div>
               <div className="form-group row">
                 <div className="offset-sm-2 col-sm-12">
-                  <button type="submit" className="btn btn-primary" onClick={this.createUser}>Sign in</button>
+                  <Button onClick={this.createUser}>Sign in</Button>
                 </div>
               </div>
             </form>

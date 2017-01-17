@@ -3,14 +3,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, browserHistory } from 'react-router';
-import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
+// Redux
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
+
+// Reducers
 import userReducer from './reducers/user';
+import teamsReducers from './reducers/teams';
 
 import routes from './Routes';
 
@@ -21,6 +25,7 @@ const composeEnhancers = composeWithDevTools({
 
 const reducers = combineReducers({
   user: userReducer,
+  teams: teamsReducers,
   routing: routerReducer
 })
 

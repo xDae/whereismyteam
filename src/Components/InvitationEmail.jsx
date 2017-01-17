@@ -1,8 +1,11 @@
-/* global emailjs */
+
 import React, { Component } from 'react';
 import { withRouter } from 'react-router'
 import validator from 'email-validator';
 
+import invitationEmail from './../utils/emailer.js';
+
+// Components
 import Button from './../Components/Button';
 import Alert from './../Components/Alert';
 
@@ -24,12 +27,13 @@ class InvitationEmail extends Component {
   }
 
   handleEmailChange = ({ target }, index) => {
-    var emails = this.state.emails.map(email => {
+    const emails = this.state.emails.map(email => {
       if (email.key === index) {
-        return Object.assign({}, email, { email: target.value })
+        return  { ...email, email: target.value }
       }
       return email;
     });
+
     this.setState({ emails });
   }
 
@@ -44,36 +48,26 @@ class InvitationEmail extends Component {
     });
   }
 
+  goToHome = () => {
+    this.props.router.push({
+      pathname: '/home',
+      state: {
+        fromCreateNewTeam: true
+      }
+    });
+  }
+
   sendEmails = e => {
     e.preventDefault();
 
-    this.setState({ ...this.state, button: { isLoading: true }});
+    this.setState({ ...this.state, button: { isLoading: true } });
 
     const validMails = this.state.emails.filter(({ email }) => validator.validate(email));
 
     validMails.length ? validMails.forEach(({ email }) => {
-      emailjs.send('mailgun', 'template_nLMjVwVc', {
-        email_to: email,
-        from_name: 'whereismyteam guys',
-        to_name: 'James',
-        mensaje: 'Check this out!'
-      })
-      .then(() => {
-        this.props.router.push({
-          pathname: '/home',
-          state: {
-            fromCreateNewTeam: true
-          }
-        })
-      })
-      .catch(() => {
-        this.props.router.push({
-          pathname: '/home',
-          state: {
-            fromCreateNewTeam: true
-          }
-        })
-      })
+      invitationEmail(email)
+      .then(() => this.goToHome())
+      .catch(() => this.goToHome())
     })
     : this.setState({ ...this.state, button: { isLoading: false } });
   }

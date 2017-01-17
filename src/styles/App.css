@@ -195,3 +195,9 @@ video {
   top: 10px;
   left: 10px;
 }
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

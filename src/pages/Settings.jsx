@@ -1,15 +1,13 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import base from './../firebase-config.js';
 
+// Components
 import Box from './../Components/Box';
+import Button from './../Components/Button';
 
 class Settings extends Component {
-  static contextTypes = {
-    currentUser: PropTypes.object
-  };
-
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this.state = {
       success: null,
@@ -19,17 +17,13 @@ class Settings extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    this.setState({ user: nextContext.currentUser });
-  }
-
-  componentDidMount() {
-    if (base.auth().currentUser) {
-      this.setState({
-        user: base.auth().currentUser
-      });
-    }
-  }
+  // componentDidMount() {
+  //   if (base.auth().currentUser) {
+  //     this.setState({
+  //       user: base.auth().currentUser
+  //     });
+  //   }
+  // }
 
   updateProfile = e => {
     e.preventDefault();
@@ -47,26 +41,6 @@ class Settings extends Component {
     })
   }
 
-  // updateEmail = e => {
-  //   e.preventDefault();
-  //   const user = base.auth().currentUser;
-
-  //   const credential = base.auth.EmailAuthProvider.credential('pepe@pepe.es', '1234567');
-  //   const reAuth = user.reauthenticate(credential)
-  //   .then(() => console.log('holii'))
-  //   .catch(error => console.log(error))
-
-  //   user.updateEmail(this.state.newEmail)
-  //   .then(() => this.setState({ success: true }))
-  //   .catch(error => {
-  //     console.log(error);
-  //     const { code, message } = error;
-  //     this.setState({
-  //       error: { code, message }
-  //     });
-  //   })
-  // }
-
   handleNameChange = e => this.setState({
     user: {
       displayName: e.target.value
@@ -78,70 +52,45 @@ class Settings extends Component {
 
   render() {
     return (
-      <div>
-        <Box>
-          {this.state.success &&
-            <div className="alert alert-success" role="alert">
-              <strong>Well done!</strong> Your profile has been updated.
-            </div>
-          }
-
-          {this.state.error &&
-            <div className="alert alert-danger" role="alert">
-              <strong>Something went wrong!</strong>
-               {this.state.error.message}
-            </div>
-          }
-
-          <h3>Settings</h3>
-
-          <div className="section">
-            <strong className="title">Personal info</strong>
-            {this.state.user &&
-              <form>
-                <div className="form-group row">
-                  <div className="col-sm-12">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Your name"
-                      value={this.state.user.displayName}
-                      onChange={this.handleNameChange}/>
-                  </div>
-                </div>
-                <div className="form-group row">
-                  <div className="offset-sm-2 col-sm-12">
-                    <button type="submit" className="btn btn-primary" onClick={this.updateProfile}>update</button>
-                  </div>
-                </div>
-              </form>
-            }
+      <Box>
+        {this.state.success &&
+          <div className="alert alert-success" role="alert">
+            <strong>Well done!</strong> Your profile has been updated.
           </div>
-          {/*<div className="section">
-            <strong className="title">Email</strong>
-            {this.state.user &&
-              <form>
-                <div className="form-group row">
-                  <div className="col-sm-12">
-                    <input
-                      type="email"
-                      className="form-control"
-                      placeholder="Your new email"
-                      // value="Your new email"
-                      onChange={this.handleEmailChange}
-                    />
-                  </div>
+        }
+
+        {this.state.error &&
+          <div className="alert alert-danger" role="alert">
+            <strong>Something went wrong!</strong>
+              {this.state.error.message}
+          </div>
+        }
+
+        <h3>Settings</h3>
+
+        <div className="section">
+          <strong className="title">Personal info</strong>
+          {this.state.user &&
+            <form>
+              <div className="form-group row">
+                <div className="col-sm-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Your name"
+                    value={this.state.user.displayName}
+                    onChange={this.handleNameChange}/>
                 </div>
-                <div className="form-group row">
-                  <div className="offset-sm-2 col-sm-12">
-                    <button type="submit" className="btn btn-primary" onClick={this.updateEmail}>update email</button>
-                  </div>
+              </div>
+              <div className="form-group row">
+                <div className="offset-sm-2 col-sm-12">
+                  <Button onClick={this.updateProfile}>Sign in</Button>
                 </div>
-              </form>
-            }
-          </div>*/}
-        </Box>
-      </div>
+              </div>
+            </form>
+          }
+        </div>
+      </Box>
     );
   }
 }
