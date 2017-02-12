@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import shortid from 'shortid';
-import localforage from "localforage";
+// import localforage from "localforage";
 
 import base from './../firebase-config.js';
 
@@ -27,25 +27,26 @@ class Room extends Component {
   componentDidMount() {
     this.bindScreenshots();
 
-    localforage.getItem('userId').then(value => {
-      if (!value) {
-        return localforage.setItem('userId', shortid.generate());
-      } else {
-        return value;
-      }
-    })
-    .then(user => {
-      this.setState({
-        currentUser: user
-      }, this.connectUser2room(user));
+    // localforage.getItem('userId')
+    //   .then(value => {
+    //     if (!value) {
+    //       return localforage.setItem('userId', shortid.generate());
+    //     } else {
+    //       return value;
+    //     }
+    //   })
+    //   .then(user => {
+    //     this.setState({
+    //       currentUser: user
+    //     }, this.connectUser2room(user));
 
-    const ref = base.database().ref(`rooms/${this.props.params.roomId}/${user}`);
+    //     const ref = base.database().ref(`rooms/${this.props.params.roomId}/${user}`);
 
-    ref.onDisconnect().update({ onlineStatus: false });
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    //     ref.onDisconnect().update({ onlineStatus: false });
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   }
 
   componentWillUnmount() {
@@ -94,4 +95,4 @@ class Room extends Component {
   }
 }
 
-export default Room
+export default Room;

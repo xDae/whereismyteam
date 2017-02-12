@@ -1,36 +1,24 @@
-import base from './../firebase-config';
+// @flow
 
-function getTeamList (userId) {
-  console.log(userId);
-  return base.fetch(`users/${userId}/teams`, {
-    context: this,
-    asArray: false,
-    queries: {
-      orderByValue: true,
-      equalTo: true
-    }
-  });
-  // .then(data => {
-  //   // console.log(data);
-  //   const teamKeys = Object.keys(data);
+import base from '../firebase-config';
+import pickBy from 'lodash/pickBy';
 
-  //   teamKeys.forEach(key => {
-  //     base.fetch(`teams/${key}`, {
-  //       context: this,
-  //       asArray: false
-  //     })
-  //     .then(data => {
-  //       const newData = Object.assign(data, { key })
-
-  //       this.setState({
-  //         teams: this.state.teams.concat(newData)
-  //       });
-  //     })
-  //   });
-  // })
-  // .catch(error => {
-  //   console.log(error);
-  // })
+function getTeamList (userId: string) {
+  return base.database().ref(`users/${userId}/teams`).once('value')
+    .then(teams => {
+      const teamsArray = Object.keys(pickBy(teams.val(), (teams => teams === true)));
+      return teamsArray;
+    })
+    .catch(error => console.log(error));
 }
 
-export default getTeamList;
+function getTeamListExtended (teamKeysArray: Array<Object>) {
+    const promises = teamKeysArray.map(key => {
+      return base.database().ref(`teams/${key}`).once('value')
+        .then(team => ({key, ...team.val()}));
+    });
+
+    return Promise.all(promises);
+}
+
+export { getTeamList, getTeamListExtended };

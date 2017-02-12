@@ -11,7 +11,7 @@ import Main from './pages/Main';
 import TeamRoom from './pages/TeamRoom.jsx';
 import Settings from './pages/Settings';
 import NewTeam from './pages/NewTeam';
-import Room from './pages/Room';
+// import Room from './pages/Room';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import PasswordRecovery from './pages/PasswordRecovery';
@@ -27,7 +27,7 @@ export default (
       <Route path="settings" component={Settings} />
       <Route path="new-team" component={NewTeam} />
     </Route>
-    <Route path="room/:roomId" component={Room} />
+    {/*<Route path="room/:roomId" component={Room} />*/}
     <Route path="login" component={Login} onEnter={notRequireAuth} />
     <Route path="register" component={Register} onEnter={notRequireAuth} />
     <Route path="passwordrecover" component={PasswordRecovery} onEnter={notRequireAuth} />

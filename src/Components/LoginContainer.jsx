@@ -1,46 +1,30 @@
-import React, {Component} from 'react';
-import { withRouter } from 'react-router';
-import base from './../firebase-config';
+import React, { Component } from 'react';
+import Button from './../Components/Button';
+
 
 class LoginContainer extends Component {
-  login = provider => {
-    const authHandler = (error, user) => {
-        if (error) {
-          console.log('EERROR', error);
-        } else {
-          this.props.router.replace({
-            pathname: '/home',
-            state: {
-              fromLogin: true
-            }
-          })
-        }
-      }
-
-    base.authWithOAuthPopup(provider, authHandler);
-  }
-
   render() {
     return (
       <div className="section">
           <strong className="title">Social login</strong>
           <div className="form-item social-login">
-            <button
-              className="btn btn-secondary btn-login-google"
-              onClick={() => this.login('google')}
+            <Button
+              type="secondary"
+              className="btn-login-google"
+              onClick={() => this.props.onLogin('google')}
             >
               <i className="fa fa-google-plus"></i> Login with google
-            </button>
-            <button
-              className="btn btn-secondary"
-              onClick={() => this.login('github')}
+            </Button>
+            <Button
+              type="secondary"
+              onClick={() => this.props.onLogin('github')}
             >
               <i className="fa fa-github"></i> Login with github
-            </button>
+            </Button>
           </div>
         </div>
     );
   }
 }
 
-export default withRouter(LoginContainer);
+export default LoginContainer;

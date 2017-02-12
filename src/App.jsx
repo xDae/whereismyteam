@@ -9,8 +9,8 @@ import { fetchUser, logout } from './actions/user';
 
 // Components
 import Header from './Components/Header';
-import Sidebar from './Components/Sidebar';
-import Footer from './Components/Footer';
+// import Sidebar from './Components/Sidebar';
+// import Footer from './Components/Footer';
 
 import './styles/main.css';
 import './styles/App.css';
@@ -29,26 +29,26 @@ class App extends Component {
     this.props.fetchUser();
   }
 
-  handleCloseSidebar = () => {
-    this.setState({
-      sidebarOpen: false
-    });
-  }
+  // handleCloseSidebar = () => {
+  //   this.setState({
+  //     sidebarOpen: false
+  //   });
+  // }
 
-  handleOpenSidebar = () => {
-    this.setState({
-      sidebarOpen: true
-    });
-  }
+  // handleOpenSidebar = () => {
+  //   this.setState({
+  //     sidebarOpen: true
+  //   });
+  // }
 
   handleLogout = () => {
     this.props.logout();
   }
 
   render() {
-    const bgClass = classNames('du', 'font_bg', this.props.className, {
-      'new_bg': this.state.sidebarOpen
-    });
+    // const bgClass = classNames('du', 'font_bg', this.props.className, {
+    //   'new_bg': this.state.sidebarOpen
+    // });
 
     return (
       <div className="h100">
@@ -57,17 +57,17 @@ class App extends Component {
           title="whereismyteam"
         />
 
-        <div className={bgClass} onClick={this.handleCloseSidebar} />
+        {/*<div className={bgClass} onClick={this.handleCloseSidebar} />*/}
 
-        <Sidebar
+        {/*<Sidebar
           isActive={this.state.sidebarOpen}
           onCloseBtn={this.handleCloseSidebar}
           onLinkClick={this.handleCloseSidebar}
-        />
+        />*/}
         <div id="wrapper">
           <Header
             user={this.props.user}
-            onOpenBtn={this.handleOpenSidebar}
+            // onOpenBtn={this.handleOpenSidebar}
             onLogout={this.handleLogout}
           />
           <main id="main">
@@ -75,7 +75,7 @@ class App extends Component {
               {this.props.children}
             </div>
           </main>
-          <Footer />
+          {/*<Footer />*/}
         </div>
       </div>
     );

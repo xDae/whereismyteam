@@ -10,7 +10,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk';
-import logger from 'redux-logger';
+// import logger from 'redux-logger';
 
 // Reducers
 import userReducer from './reducers/user';
@@ -32,7 +32,8 @@ const reducers = combineReducers({
 const middleware = routerMiddleware(browserHistory)
 
 const store = createStore(reducers, composeEnhancers(
-  applyMiddleware(middleware, thunk, logger())
+  // applyMiddleware(middleware, thunk, logger())
+  applyMiddleware(middleware, thunk)
 ));
 
 const history = syncHistoryWithStore(browserHistory, store)

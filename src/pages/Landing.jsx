@@ -4,18 +4,15 @@ import { Link } from 'react-router';
 
 class Landing extends Component {
   render() {
-    const { currentUser } = this.context;
     return (
       <div>
-        <div>{currentUser && currentUser.name}</div>
         <span>welcome to bla bla bla</span>
         <br/>
           <span>this is our wonderful page</span>
           <br/>
-          {currentUser && <Link to="/home">Go to Home</Link>}
+          <Link to="/home">Go to Home</Link>
 
           <br/>
-          {/*<Link className="btn btn-primary" to={`/room/${shortid.generate()}`}>generar sala aleatoria</Link>*/}
       </div>
     );
   }

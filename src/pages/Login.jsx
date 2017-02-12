@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import { Link } from 'react-router';
-import base from './../firebase-config.js';
 
-import Box from './../Components/Box';
+import login from '../api/user';
+import base from '../firebase-config.js';
+
+import Box from '../Components/Box';
+import Button from './../Components/Button';
 import LoginContainer from '../Components/LoginContainer';
 
 class Login extends Component {
@@ -35,13 +39,25 @@ class Login extends Component {
     };
   }
 
-  login = e => {
+  handleLogin = e => {
     e.preventDefault();
 
     base.authWithPassword({
       email: this.state.email,
       password: this.state.password
     }, this.authHandler);
+  }
+
+  handleSocialLogin = provider => {
+    login(provider)
+      .then(() => {
+        this.props.router.replace({
+            pathname: '/home',
+            state: {
+              fromLogin: true
+            }
+          })
+      });
   }
 
   handleEmailChange = event => this.setState({ email: event.target.value });
@@ -97,18 +113,18 @@ class Login extends Component {
               </div>
               <div className="form-group row">
                 <div className="offset-sm-2 col-sm-12">
-                  <button type="submit" className="btn btn-primary" onClick={this.login}>Sign in</button>
+                  <Button onClick={this.handleLogin}>Sign in</Button>
                   <Link to="passwordrecover" className="btn btn-secondary mr-20">Forgot your password?</Link>
                 </div>
               </div>
             </form>
           </div>
 
-          <LoginContainer />
+          <LoginContainer onLogin={this.handleSocialLogin} />
         </Box>
       </div>
     );
   }
 }
 
-export default Login;
+export default withRouter(Login);

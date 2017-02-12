@@ -20,13 +20,14 @@ class WebcamWrapper extends Component {
   }
 
   componentDidMount() {
-    if(this.props.roomId) {
-      this.bindScreenshots();
-    }
+    this.props.roomId && this.bindScreenshots();
   }
 
   componentWillReceiveProps(nextProps) {
-      this.connectUser2room(nextProps.user.uid);
+    this.connectUser2room(nextProps.user.uid);
+
+    const ref = base.database().ref(`teams/${nextProps.roomId}/users/${nextProps.user.uid}`);
+    ref.onDisconnect().update({ onlineStatus: false });
   }
 
   componentWillUnmount() {
@@ -70,7 +71,7 @@ class WebcamWrapper extends Component {
         <header>
           <div className="tags">
           {this.state.activeCam && (
-            <Button type="secondary" onClick={() => this.takeSnapshot()}>take snapshot</Button>
+            <Button type="secondary" onClick={this.takeSnapshot}>take snapshot</Button>
           )}
           </div>
         </header>

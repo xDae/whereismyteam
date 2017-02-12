@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { IndexLink, Link } from 'react-router';
+// import HamburguerButton from './HamburguerButton';
 
 // import Logout from './../Components/Logout';
 
@@ -30,14 +31,7 @@ class Header extends Component {
   render() {
     return (
       <header id="header">
-        <a
-          id="menu-toggle"
-          href="#"
-          className="btn btn-dark btn-lg toggle"
-          onClick={this.props.onOpenBtn}
-        >
-          <i className="fa fa-bars"></i>
-        </a>
+        {/*<HamburguerButton onClick={this.props.onOpenBtn} />*/}
 
         <IndexLink to={this.props.user ? "/home" : "/"} className="logo">whereismyteam</IndexLink>
 

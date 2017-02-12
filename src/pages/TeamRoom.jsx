@@ -8,12 +8,10 @@ import WebcamWrapper from './../Components/WebcamWrapper';
 class TeamRoom extends Component {
   render() {
     return (
-      <div>
-        <WebcamWrapper
-          user={this.props.user}
-          roomId={this.props.params.teamId}
-        />
-      </div>
+      <WebcamWrapper
+        user={this.props.user}
+        roomId={this.props.params.teamId}
+      />
     );
   }
 }
